@@ -1,5 +1,5 @@
 # ADA Project - Team HotChocolate
-#### Gabriel Benato, Auriane Debache, Xavier Nal and Joao Pradovieira
+#### Gabriel Benato, Auriane Debache, Xavier Nal and Joao Prado
 
 ## Inroduction 
 
