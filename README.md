@@ -14,5 +14,6 @@
   - plots' files 
 
 ## Notes
+Install in developer mode with `pip install -e . ` from a terminal in the project's main folder.
 Here is the Google DRive link to download the data 
 https://drive.google.com/drive/folders/1Wz6D2FM25ydFw_-41I9uTwG9uNsN4TCF
