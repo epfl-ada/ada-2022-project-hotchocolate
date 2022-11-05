@@ -6,6 +6,6 @@ site.ENABLE_USER_SITE = "--user" in sys.argv[1:]
 if __name__ == "__main__":
     setup(name='ADA-2022-PROJECT-HOTCHOCOLATE',
       version='0.0',
-      description='ADAProject',
+      description='ADA',
       author='HotChocolate',
       packages=['functions'])
