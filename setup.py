@@ -8,4 +8,4 @@ if __name__ == "__main__":
       version='0.0',
       description='ADAProject',
       author='HotChocolate',
-      packages=['Function'])
+      packages=['functions'])
