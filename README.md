@@ -6,9 +6,9 @@
 ## Set-up
 
 - main
-- DATA (folder that won't contain the data on git)
+- data (folder that won't contain the data on git)
   - data's files (Dataset files that will only be present locally)
-- Function (folder)
+- functions (folder)
   - functions' files
 - Plots (folder)
   - plots' files 
