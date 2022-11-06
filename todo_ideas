@@ -1,0 +1,23 @@
+
+
+
+
+[TODO] Exploration:
+-> A faire pour les 2 site web:
+    - compter le nombre utilisateur en fonction du nombre de rating qu ils ont fait ( serparer les utilisateurs qu ils ont voté 10 fois, 100 fois, 1000fois, 10 000 fois)
+    - voir la repartition des utilisateurs en fonction de leurs pays
+        - reflechir si ont peut faire un matching en fonction des pays
+    - voir la repartitions des bieres en fonction des pays
+    - voir le top 10 des meilleurs bieres/brasseries  par site/ par annee
+    - voir le top
+    
+[IDEAS] Bias:
+    - voir la moyenne et la standard deviation pour les utilisateurs d un meme pays et l interval de notation pour les utilisateurs de ce pays 
+    
+
+
+[IDEAS] Dataset:
+    - faire un dataset avec toutes les bieres de lausanne
+    - trouver un dataset de rating de bieres avec des utilisateurs europeen/ de site europeen
+    
+    
