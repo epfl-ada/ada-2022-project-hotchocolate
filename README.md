@@ -21,10 +21,16 @@ We use ```nltk```,```sklearn.feature_extraction``` and our own flavor of vector 
 ### Week 48 (28/11-2/12)
 
 ### Week 49 (5/12-9/12)
+First implementation of the website 
+A first visual mock-up of the data story
+First draft of the datastory.
 
 ### Week 50 (12/12-16/12)
+Finish all plots
+Correct text
 
 ### Week 51 (19/12-23/12)
+Safety net week - We hope to be finished before 19/12 and to use this week only in case of an emergency
 
 __Landmark__ : A brewtiful data analysis is live !
 
