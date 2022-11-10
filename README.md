@@ -18,16 +18,20 @@ We use ```nltk```,```sklearn.feature_extraction``` and our own flavor of vector 
 
 ## Proposed timeline
 
+### Week 47 (21/11-25/11)
 ### Week 48 (28/11-2/12)
-
+First implementation of the website (1 week)
+Design a simple regression model to predict beer rating (1 week)
 ### Week 49 (5/12-9/12)
-First implementation of the website 
-A first visual mock-up of the data story
-First draft of the datastory.
+Finish interactive map chart. (whole week)
 
+Bias correction for data analysis (3 days)
+Statistical analysis (4 day)
 ### Week 50 (12/12-16/12)
-Finish all plots
-Correct text
+Finish all plots (4 days)
+
+Correct text (1 day)
+Design (3 days, 1 person)
 
 ### Week 51 (19/12-23/12)
 Safety net week - We hope to be finished before 19/12 and to use this week only in case of an emergency
