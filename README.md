@@ -18,6 +18,17 @@ We use ```nltk```,```sklearn.feature_extraction``` and our own flavor of vector 
 
 ## Proposed timeline
 
+### Before Week 47 (Now)
+
+Milestone 2 : 
+- Top 10 beers by country, by type, for each site separatedly. (without bias correction)
+- Histogram of users in terms of their rating counts (already partially done by Gab).
+- Top X breweries (in terms of beer count, and how many ratings their beer have). 
+- Top 10 beers in matched dataset (without bias correction),
+- Basic textual review analysis (% of language, review length)
+- Wordcloud with most commonly used words (if time allows)
+
+
 ### Week 47 (21/11-25/11)
 Homework 2
 ### Week 48 (28/11-2/12)
@@ -34,11 +45,17 @@ Finish interactive map chart. (1 week, Gabriel)
 Bias correction for data analysis (3 days, Auriane)
 
 Statistical analysis (4 day, everyone)
-### Week 50 (12/12-16/12)
-Finish all plots (4 days)
 
-Correct text (1 day)
-Design (3 days, 1 person)
+
+### Week 50 (12/12-16/12)
+
+Write down our conclusions (only once two last steps are validated) (4 days, 2 persons) 
+
+Finish all plots (4 days, 1 person)
+
+Correct text (1 day, everyone)
+
+Design (3 days, Auriane)
 
 ### Week 51 (19/12-23/12)
 Safety net week - We hope to be finished before 19/12 and to use this week only in case of an emergency
