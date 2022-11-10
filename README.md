@@ -21,12 +21,12 @@ We use ```nltk```,```sklearn.feature_extraction``` and our own flavor of vector 
 ### Before Week 47 (Now)
 
 Milestone 2 : 
-- Top 10 beers by country, by type, for each site separatedly. (without bias correction)
+- Top 10 beers by country, by type, for each site separatedly. (without bias correction) (Auriane and Xavier)
 - Histogram of users in terms of their rating counts (already partially done by Gab).
-- Top X breweries (in terms of beer count, and how many ratings their beer have). 
-- Top 10 beers in matched dataset (without bias correction),
-- Basic textual review analysis (% of language, review length)
-- Wordcloud with most commonly used words (if time allows)
+- Top X breweries, for each site (in terms of beer count, and how many ratings their beer have). (Auriane and Xavier)
+- Top 10 beers in matched dataset (without bias correction) Gab
+- Basic textual review analysis (% of language, review length) João
+- Wordcloud with most commonly used words (if time allows) João
 
 
 ### Week 47 (21/11-25/11)
