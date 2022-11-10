@@ -19,14 +19,21 @@ We use ```nltk```,```sklearn.feature_extraction``` and our own flavor of vector 
 ## Proposed timeline
 
 ### Week 47 (21/11-25/11)
+Homework 2
 ### Week 48 (28/11-2/12)
-First implementation of the website (1 week)
-Design a simple regression model to predict beer rating (1 week)
-### Week 49 (5/12-9/12)
-Finish interactive map chart. (whole week)
+Homework 2
 
-Bias correction for data analysis (3 days)
-Statistical analysis (4 day)
+First implementation of the website (1 week, João)
+
+Design a simple regression model to predict beer rating (1 week, 1 person)
+### Week 49 (5/12-9/12)
+
+
+Finish interactive map chart. (1 week, Gabriel)
+
+Bias correction for data analysis (3 days, Auriane)
+
+Statistical analysis (4 day, everyone)
 ### Week 50 (12/12-16/12)
 Finish all plots (4 days)
 
