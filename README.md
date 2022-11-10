@@ -18,7 +18,7 @@ We use ```nltk```,```sklearn.feature_extraction``` and our own flavor of vector 
 
 ## Proposed timeline
 
-### Week 48 (28/12-2/12)
+### Week 48 (28/11-2/12)
 
 ### Week 49 (5/12-9/12)
 
