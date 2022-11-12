@@ -4,6 +4,10 @@
 ## Introduction 
 
 ## Research Questions
+- Which are the best beer of each country, when ratings are corrected with respect to reviewer bias ?
+- What are the countries and breweries producing the best beers ? Does the result change when we take into account reviewer bias ?
+- What are the best beers sold on SAT ? 
+- (Xavier idea, still need to see if feasible) : Is there a correlation between rating and review date when we consider timing of big festivals ?
   
 ## Proposed additional datasets
 
@@ -12,7 +16,6 @@ We propose an auxiliary dataset consisting of information about 72 beers sold at
 | Beer name | Price | Type | Brewery name | Origin | Available on tap? (True/False) | Available only seasonally? (True/False) | ABV | Serving volume |
 |-----------|-------|------|--------------|--------|------------------|---------------------------|-----|----------------|
 
-We use ```nltk```,```sklearn.feature_extraction``` and our own flavor of vector space retrieval to identify these beers in BeerAdvocate and RateBeer datasets. A full analysis is available in ```notebooks/SAT beers.ipynb```.
 
 ## Methods
 
