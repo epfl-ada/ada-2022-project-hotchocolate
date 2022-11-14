@@ -12,6 +12,7 @@ MAX_CSV_SIZE = 1000000
 CHUNK_SIZE = 200
 def fetch_satellite_data():
     return 0
+COLUMNS_NAMES = ["beer_name","beer_id","brewery_name","brewery_id","style","abv","date","username","user_id","appearance","aroma","palate","taste","overall","rating","text"]
 
 def fetch_csv(dataset_path, name):
     with tarfile.open(dataset_path) as tar:
@@ -42,6 +43,7 @@ def fetch_reviews(dataset_path, max_csv_size = MAX_CSV_SIZE,early_stop = 0):
                         review = []
                         if row_count % max_csv_size == 0:
                             df = pd.DataFrame.from_dict(review_dict, orient="index")
+                            df.columns = COLUMNS_NAMES
                             df.to_csv(f"../data/{tarfile_name.replace('.tar','')}_{filename.replace('.txt.gz','')}_part_{csv_count}.csv")
                             del review_dict #Just to not kill my memory please disregard :)
                             review_dict = {}
