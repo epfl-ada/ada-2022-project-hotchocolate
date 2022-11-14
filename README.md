@@ -3,6 +3,12 @@
 
 ## Introduction 
 
+Beer is an important cultural symbol for many countries and [has generated more than $550bn revenue worldwide in 2021](https://www.statista.com/outlook/cmo/alcoholic-drinks/beer/worldwide#revenue). Despite the worldwide success of ales, it is extremely difficult to analyze beer quality, not only because the name 'beer' encompasses many dissimilar beverages, but because the task itself is subjective and humans are prone to biases.
+
+Our objective is to tell the story of the greatness of beers and countries through the opinion and eyes of beer lovers, while considering statistical corrections of common biases that we, humans, tend to have towards things we enjoy. We aim to use a 'consensus through majority' approach to estimate and correct for the bias of users that are consistently (un)happy with their beverage choices and generate rankings based on country of origin. 
+
+Once this consensus ranking is devised, we propose an excursion to SAT as a last analysis, in order to check if the beers sold in campus are specially appreciated by RateBeer and BeerAdvocate international communities. We wish to provide our peer students the distilled wisdom of the internet and provide some guidance in the quest for the best ale in Ecublens !
+
 ## Research Questions
 - Which are the best beer of each country, when ratings are corrected with respect to reviewer bias ?
 - What are the countries and breweries producing the best beers ? Does the result change when we take into account reviewer bias ?
@@ -11,13 +17,21 @@
   
 ## Proposed additional datasets
 
-We propose an auxiliary dataset consisting of information about 72 beers sold at EPFL's bar, SAT. This datases is constructed by parsing the SAT menu, available here. For each beer, the following information is available: 
+We propose an auxiliary dataset consisting of information about 72 beers sold at EPFL's bar, SAT. This datases is constructed by parsing the SAT menu, available [here](https://satellite.bar/bar/). For each beer, the following information is available: 
 
 | Beer name | Price | Type | Brewery name | Origin | Available on tap? (True/False) | Available only seasonally? (True/False) | ABV | Serving volume |
 |-----------|-------|------|--------------|--------|------------------|---------------------------|-----|----------------|
 
 
 ## Methods
+
+### Data processing
+
+### Exploratory data analysis and first summary statistics
+
+### Standardization and bias correction
+
+### Textual analysis
 
 ## Proposed timeline
 
