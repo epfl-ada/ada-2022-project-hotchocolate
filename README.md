@@ -4,11 +4,11 @@
 
 ## Introduction 
 
-Beer is an important cultural symbol for many countries and [has generated more than $550bn revenue worldwide in 2021](https://www.statista.com/outlook/cmo/alcoholic-drinks/beer/worldwide#revenue). Despite the worldwide success of ales, it is extremely difficult to analyze beer quality, not only because the name 'beer' encompasses many dissimilar beverages, but because the task itself is subjective and humans are prone to biases.
+Beer is an important cultural symbol for many countries and [has generated more than $550bn revenue worldwide in 2021](https://www.statista.com/outlook/cmo/alcoholic-drinks/beer/worldwide#revenue).
 
-Our objective is to tell the story of the greatness of beers and countries through the opinion and eyes of beer lovers, while considering statistical corrections of common biases that we, humans, tend to have towards things we enjoy. We aim to use a 'consensus through majority' approach to estimate and correct for the bias of users that are consistently (un)happy with their beverage choices and generate rankings based on beer country of origin. 
+Our objective is to tell the story of the greatness of beers and countries through the opinion and eyes of beer lovers, while considering statistical corrections of common biases that we, humans, tend to have towards things we enjoy. We aim to use a 'consensus through majority' approach to estimate and correct for the bias of users that are consistently (un)happy with their beverage choices and thus, generate rankings of countries based on their brewed beer's score.
 
-Once this consensus ranking is devised, we propose an excursion to SAT as a last analysis, in order to check if the beers sold in campus are specially appreciated by RateBeer and BeerAdvocate international communities. We wish to provide our peer students the distilled wisdom of the internet and provide some guidance in the quest for the best ale in Ecublens !
+Once this consensus ranking is devised, we propose an excursion to SAT as a last analysis. We wish to provide our peer students the distilled wisdom of the internet and provide some guidance in the quest for the best ale in Ecublens !
 
 ## Research Questions
 - Which are the best beer of each country, when ratings are corrected with respect to reviewer bias ?
@@ -26,8 +26,7 @@ We propose an auxiliary dataset consisting of information about 72 beers sold at
 | Beer name | Price | Type | Brewery name | Origin | Available on tap? (True/False) | Available only seasonally? (True/False) | ABV | Serving volume |
 |-----------|-------|------|--------------|--------|------------------|---------------------------|-----|----------------|
 
-+ classement happiness si on fait
-
+We will also extract a countries ranking based on Hapiness in 2017 
 ## Methods
 
 ### Data processing
@@ -42,26 +41,18 @@ The top 5 location of users and of breweries were computed. (goal si j'y arrive,
 Histogram plots of the number of reviews per users and of the number of beers per breweries were also computed. Both show a skewed distribution. 
 (faire un describe qui donne médiane quartiles etc) 
 
-Show ranking before correction ?
-
 ### Standardization and bias correction
 
-To correct the bias, we propose to compute the mean/median rating (on doit décider) for each beer. For each beer an user will have rated, we will also compute the difference between their rating and the mean rating of the beer. We will then average these differences (faire deux cas en fonction de si positif ou négatif?). This average will be added to the rating by the user of each beer and will serve as a correction. Moreover, when we compute averages, more weight will be given to users which number of reviews go over a certain threshold. 
+
+To correct the bias, we propose to compute the median rating  for each beer. For each beer an user will have rated, we will also compute the difference between their rating and the median rating of the beer. We will then average these differences.
+
+$$UserCorrection = \frac{\displaystyle\sum_{UserRatings}{\frac{BeerScore_{median} - BeerScore_{user}}{\sigma_{BeerScore}}}}{N_{UserRatings}}$$
+
+This average will be added to the rating by the user of each beer and will serve as a correction. Moreover, when we compute averages, more weight will be given to users which number of reviews go over a certain threshold. 
 
 ### Textual analysis
 
 ## Proposed timeline
-
-### Before Week 47 (Now)
-
-Milestone 2 : 
-- Top 10 beers by country, by type, for each site separatedly. (without bias correction) (Auriane and Xavier)
-- Histogram of users in terms of their rating counts (already partially done by Gab).
-- Top X breweries, for each site (in terms of beer count, and how many ratings their beer have). (Auriane and Xavier)
-- Top 10 beers in matched dataset (without bias correction) Gab
-- Basic textual review analysis (% of language, review length) João
-- Wordcloud with most commonly used words (if time allows) João
-
 
 ### Week 47 (21/11-25/11)
 Homework 2
