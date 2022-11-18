@@ -149,8 +149,7 @@ def summary_analysis(dataset):
 class LanguageIdentification:
 
     def __init__(self):
-        pretrained_lang_model = "/tmp/lid.176.bin"
-        self.model = fasttext.load_model("functions/lid.176.bin")
+        self.model = fasttext.load_model("../functions/lid.176.bin")
 
     def predict_lang(self, text):
         predictions = self.model.predict(text, k=1) # returns top 2 matching languages
