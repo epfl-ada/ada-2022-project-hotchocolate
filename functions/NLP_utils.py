@@ -13,7 +13,9 @@ from nltk.stem import PorterStemmer, WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 import fasttext
-
+import warnings
+#Do not want warnings about nltk libraries
+warnings.filterwarnings("ignore")
 ## Helper functions for Information Retrieval Natural Language Processing on datasets
 tfidf = TfidfVectorizer()
 
@@ -88,13 +90,67 @@ def display_results_df(base_df,results_df,reference_column,results):
     new_df[results] = results_df[results].copy()
     return new_df
 
+### Helper functions for word count, language identification and date 
+def fetch_ratings(dataset):
+    first = pd.read_csv(f"data/{dataset}_ratings_part_0.csv",low_memory=False)
+    if dataset == "BeerAdvocate" :
+        first = first[first['rating'] != ' nan']
+    if dataset == "RateBeer" :
+        first = first[first['rating'] != 'NaN']    
+    ratings = first.rating.astype(float)
+    if dataset == "BeerAdvocate" :
+        csv_count = 17
+    else :
+        csv_count = 15
+    for index in range(1,csv_count):   
+        temp = pd.read_csv(f"data/{dataset}_ratings_part_{index}.csv",low_memory=False)
+        if dataset == "BeerAdvocate" :
+            first = temp[temp['rating'] != ' nan']
+        if dataset == "RateBeer" :
+            first = temp[temp['rating'] != 'NaN']        
+        
+        rating = temp.rating.astype(float)
+        ratings = dates = pd.concat([ratings, rating])
+    return ratings
+
+def summary_analysis(dataset):
+    first = pd.read_csv(f"data/{dataset}_ratings_part_0.csv",low_memory=False)
+    #TODO: standardize NaNs between datasets
+    if dataset == "BeerAdvocate" :
+        first = first[first['text'] != ' nan']
+    if dataset == "RateBeer" :
+        first = first[first['text'] != 'NaN']
+    print("Started identifying languages, counting words and binning dates...")
+    langs = identify_lang(first)
+    first["word_count"] = first.text.apply(lambda x: len(str(x).split()))
+    counts = first.word_count
+    #dates = first.date
+    dates = pd.to_datetime(first.date, unit='s') #Maybe erase this
+    #There is a total of 17 csvs for BeerAdvocate textual ratings and 15 for RateBeer.
+    if dataset == "BeerAdvocate" :
+        csv_count = 17
+    else :
+        csv_count = 15
+    for index in range(1,csv_count):
+        temp = pd.read_csv(f"data/{dataset}_ratings_part_{index}.csv",low_memory=False)
+        temp = temp[temp['text'] != ' nan']
+        temp["word_count"] = first.text.apply(lambda x: len(str(x).split()))
+        count = temp.word_count
+        #date = temp.date
+        date = pd.to_datetime(temp.date, unit='s')  #Maybe erase this
+        temp = identify_lang(temp)
+        langs = pd.concat([langs, temp])
+        counts = pd.concat([counts, count])
+        dates = pd.concat([dates, date])
+    print("Done")
+    return langs, counts, dates
 ### Language Identification
 
 class LanguageIdentification:
 
     def __init__(self):
         pretrained_lang_model = "/tmp/lid.176.bin"
-        self.model = fasttext.load_model("../functions/lid.176.bin")
+        self.model = fasttext.load_model("functions/lid.176.bin")
 
     def predict_lang(self, text):
         predictions = self.model.predict(text, k=1) # returns top 2 matching languages
