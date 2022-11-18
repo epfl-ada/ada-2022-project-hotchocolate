@@ -2,7 +2,7 @@
 ## Beers around the world and in our local Satellite
 #### Gabriel Benato, Auriane Debache, Xavier Nal and Joao Prado
 
-## Introduction 
+## Abstract 
 
 Beer is an important cultural symbol for many countries and [has generated more than $550bn revenue worldwide in 2021](https://www.statista.com/outlook/cmo/alcoholic-drinks/beer/worldwide#revenue).
 
@@ -21,7 +21,7 @@ Once this consensus ranking is devised, we propose an excursion to SAT as a last
   
 ## Proposed additional datasets
 
-We propose an auxiliary dataset consisting of information about 72 beers sold at EPFL's bar, SAT. This datases is constructed by parsing the SAT menu, available [here](https://satellite.bar/bar/). For each beer, the following information is available: 
+We propose an auxiliary dataset consisting of information about 66 beers sold at EPFL's bar, SAT. This datases is constructed by parsing the SAT menu, available [here](https://satellite.bar/bar/). For each beer, the following information is available: 
 
 | Beer name | Price | Type | Brewery name | Origin | Available on tap? (True/False) | Available only seasonally? (True/False) | ABV | Serving volume |
 |-----------|-------|------|--------------|--------|------------------|---------------------------|-----|----------------|
@@ -31,9 +31,11 @@ We will also extract a countries ranking based on Hapiness in 2017
 
 ### Data processing
 
-First of all, the proportion of NA values in each column of each dataset was analyzed. Columns that displayed a proportion of NA values going over a certain threshold (préciser) were discarded, since they would not have provided much information to our analysis. Moreover, it was found that there were some users were present in duplicates in the users dataset. Only one occurrence was kept when this was the case. In addition, breweries that were found to produce no beers that were rated (vérifier exactement ça) were discarded from the datasets.  
+First of all, the proportion of NaN values in each column of each dataset was analyzed. Columns that displayed a proportion of NA values going over a certain threshold (préciser) were discarded, since they would not have provided much information to our analysis. Moreover, it was found that there were some users were present in duplicates in the users dataset. Only one occurrence was kept when this was the case. In addition, breweries that were found to produce no beers that were rated (vérifier exactement ça) were discarded from the datasets.  
 
+### SAT Dataset processing
 
+We use Vector Space Retrieval based on ```sklearn``` feature extraction module in order to identify SAT beers in the proposed datasets. To this end, we construct tokenized queries and beer entries based on beer name, brewery name and alcohol content and use cosine distance as a measure of similarity. After a first analysis of our results, matches with cosine similarity smaller than 0.7 were considered not relevant and the best result for each datase
 
 ### Exploratory data analysis and first summary statistics
 
@@ -50,7 +52,9 @@ $$UserCorrection = \frac{\displaystyle\sum_{UserRatings}{\frac{BeerScore_{median
 
 This average will be added to the rating by the user of each beer and will serve as a correction. Moreover, when we compute averages, more weight will be given to users which number of reviews go over a certain threshold. 
 
-### Textual analysis
+### Textual and rating analysis
+
+A first exploration of the textual reviews and ratings is performed by computing summary statistics and histograms of word counts per review and date of creation per rating/review. We then use a ```fasttext``` pretrained model in order to identify the most common languages in the reviews of both BeerAdvocate and RateBeer. A decision was taken to only consider ratings in our future analysis, since the heterogeneity of textual reviews, (in terms of size, content and language) make their study non trivial. 
 
 ## Proposed timeline
 
