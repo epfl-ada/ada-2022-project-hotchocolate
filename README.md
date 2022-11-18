@@ -28,7 +28,7 @@ We propose an auxiliary dataset consisting of information about 66 beers sold at
 
 We will also extract a countries ranking based on Hapiness in 2017 available at https://allcountries.org/ranks/happiness_index_country_rankings_2017.html.
 
-The following informations will be available:
+The following information will be available:
 
 | Rank | Country/Region | Hapiness' score |
 |------|----------------|-----------------|
@@ -37,7 +37,7 @@ The following informations will be available:
 
 ### Data processing
 
-First of all, the proportion of NaN values in each column of each dataset was analyzed. Columns that displayed a proportion of NA values going over a certain threshold (préciser) were discarded, since they would not have provided much information to our analysis. Moreover, it was found that there were some users were present in duplicates in the users dataset. Only one occurrence was kept when this was the case. In addition, breweries that were found to produce no beers that were rated were discarded from the datasets.  
+First of all, the proportion of NaN values in each column of each dataset was analyzed. Columns that displayed a proportion of NA values going over 60% were discarded, since they would not have provided much information to our analysis. Moreover, it was found that there were some users were present in duplicates in the users dataset. Only one occurrence was kept when this was the case. In addition, breweries that were found to produce no beers that were rated were discarded from the datasets.  
 
 ### SAT Dataset processing
 
@@ -46,7 +46,7 @@ We used Vector Space Retrieval based on ```sklearn``` feature extraction module 
 ### Exploratory data analysis and first summary statistics
 
 The top 5 location of users and of breweries were computed.
-Histogram plots of the number of reviews per users and of the number of beers per breweries were also computed.
+Histogram plots of the number of ratings received by beers and number of ratings ratings per the number of reviews per users and of the number of beers per breweries were also computed.
 
 ### Standardization and bias correction
 
