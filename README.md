@@ -1,5 +1,5 @@
 # ADA Project - Team HotChocolate
-## Beers around the world and in our local Satellite an the Hapiness they might bring
+## Beers around our brewtiful world and in our local Satellite and the Hapiness they bring us
 #### Gabriel Benato, Auriane Debache, Xavier Nal and Joao Prado
 
 ## Abstract 
@@ -27,6 +27,7 @@ We propose an auxiliary dataset consisting of information about 66 beers sold at
 |-----------|-------|------|--------------|--------|------------------|---------------------------|-----|----------------|
 
 We will also extract a countries ranking based on Hapiness in 2017 available at https://allcountries.org/ranks/happiness_index_country_rankings_2017.html.
+
 The following informations will be available:
 
 | Rank | Country/Region | Hapiness' score |
@@ -40,26 +41,25 @@ First of all, the proportion of NaN values in each column of each dataset was an
 
 ### SAT Dataset processing
 
-We use Vector Space Retrieval based on ```sklearn``` feature extraction module in order to identify SAT beers in the proposed datasets. To this end, we construct tokenized queries and beer entries based on beer name, brewery name and alcohol content and use cosine distance as a measure of similarity. After a first analysis of our results, matches with cosine similarity smaller than 0.7 were considered not relevant and the best result for each datase
+We used Vector Space Retrieval based on ```sklearn``` feature extraction module in order to identify SAT beers in the proposed datasets. To this end, we constructed tokenized queries and beer entries based on beer name, brewery name and alcohol content and used cosine distance as a measure of similarity. After a first analysis of our results, matches with cosine similarity smaller than 0.7 were considered not relevant and we keep the best result for each dataset. We checked manually the beers without a match under our similarity threshold and accepeted the low similarity matches that wwere due to negligable variations.
 
 ### Exploratory data analysis and first summary statistics
 
-The top 5 location of users and of breweries were computed. (goal si j'y arrive, voir s'il y a une corrélation entre les deux) 
-Histogram plots of the number of reviews per users and of the number of beers per breweries were also computed. Both show a skewed distribution. 
-(faire un describe qui donne médiane quartiles etc) 
+The top 5 location of users and of breweries were computed.
+Histogram plots of the number of reviews per users and of the number of beers per breweries were also computed.
 
 ### Standardization and bias correction
 
 
 To correct the bias, we propose to compute the median rating  for each beer. For each beer an user will have rated, we will also compute the difference between their rating and the median rating of the beer. We will then average these differences.
 
-$$UserCorrection = \frac{\displaystyle\sum_{UserRatings}{\frac{BeerScore_{median} - BeerScore_{user}}{\sigma_{BeerScore}}}}{N_{UserRatings}}$$
+$$\text{UserCorrection} = \frac{\displaystyle\sum_{UserRatings}{\frac{BeerScore_{median} - BeerScore_{user}}{\sigma_{BeerScore}}}}{N_{UserRatings}}$$
 
 This correction will be added to all the user's ratings. Moreover, when we compute averages, more weight will be given to users which number of reviews go over a certain threshold. 
 
 ### Textual and rating analysis
 
-A first exploration of the textual reviews and ratings is performed by computing summary statistics and histograms of word counts per review and date of creation per rating/review. We then use a ```fasttext``` pretrained model in order to identify the most common languages in the reviews of both BeerAdvocate and RateBeer. A decision was taken to only consider ratings in our future analysis, since the heterogeneity of textual reviews, (in terms of size, content and language) make their study non trivial. 
+A first exploration of the textual reviews and ratings has been performed by computing summary statistics and histograms of word counts per review and date of creation per rating/review. We then used a ```fasttext``` pretrained model in order to identify the most common languages in the reviews of both BeerAdvocate and RateBeer. A decision was taken to only consider ratings in our future analysis, since the heterogeneity of textual reviews, (in terms of size, content and language) make their study non trivial. 
 
 ## Proposed timeline
 
