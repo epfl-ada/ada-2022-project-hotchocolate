@@ -37,7 +37,7 @@ The following information will be available:
 
 ### Data processing
 
-First of all, the proportion of NaN values in each column of each dataset was analyzed. Columns that displayed a proportion of NA values going over 60% were discarded, since they would not have provided much information to our analysis. Moreover, it was found that there were some users were present in duplicates in the users dataset. Only one occurrence was kept when this was the case. In addition, breweries that were found to produce no beers that were rated were discarded from the datasets.  
+First of all, the proportion of NaN values in each column of each dataset was analyzed. Columns that displayed a proportion of NA values going over 60% were discarded, since they would not have provided much information to our analysis. Moreover, it was found that there were some users were present in duplicates in the users dataset. Only one occurrence was kept when this was the case. In addition, breweries that were found to produce no beers that were rated were discarded from the datasets. After exploring the matched beer dataset, it was decided to not use in our analysis, which will consider each one of the main datasets separatedly.
 
 ### SAT Dataset processing
 
