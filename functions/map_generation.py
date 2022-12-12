@@ -136,7 +136,7 @@ def generate_map(filename, map_name, usa= True,
         reversescale=True,
         marker_line_color='darkgray',
         marker_line_width=0.5,
-        colorbar_tickprefix = 'avreage rating',
+        colorbar_tickprefix = 'avreage rating ',
         colorbar_title = 'style of beer<br>per country',
     ))
 
@@ -166,7 +166,7 @@ def generate_map(filename, map_name, usa= True,
             reversescale=True,
             marker_line_color='darkgray',
             marker_line_width=0.5,
-            colorbar_tickprefix = 'avreage rating',
+            colorbar_tickprefix = 'avreage rating ',
             colorbar_title = 'style of beer<br>and avreage ranking<br>in USA',
         ))
 
