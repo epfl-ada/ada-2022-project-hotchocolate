@@ -44,7 +44,7 @@ def fetch_reviews(dataset_path, max_csv_size = MAX_CSV_SIZE,early_stop = 0):
                         if row_count % max_csv_size == 0:
                             df = pd.DataFrame.from_dict(review_dict, orient="index")
                             df.columns = COLUMNS_NAMES
-                            df.to_csv(f"../DATA/{tarfile_name.replace('.tar','')}_{filename.replace('.txt.gz','')}_part_{csv_count}.csv")
+                            df.to_csv(f"/DATA/{tarfile_name.replace('.tar','')}_{filename.replace('.txt.gz','')}_part_{csv_count}.csv")
                             del review_dict #Just to not kill my memory please disregard :)
                             review_dict = {}
                             print(f"Dumping data to csv number {csv_count}...")
@@ -58,7 +58,7 @@ def fetch_reviews(dataset_path, max_csv_size = MAX_CSV_SIZE,early_stop = 0):
                             review.append(value.rstrip())
     
     df = pd.DataFrame.from_dict(review_dict, orient="index")
-    df.to_csv(f"../DATA/{tarfile_name.replace('.tar','')}_{filename.replace('.txt.gz','')}_part_{csv_count}.csv")
+    df.to_csv(f"/DATA/{tarfile_name.replace('.tar','')}_{filename.replace('.txt.gz','')}_part_{csv_count}.csv")
     del review_dict #Just to not kill my memory please disregard :)
     print(f"Dumping data to csv number {csv_count}...")
     print("Success!")
