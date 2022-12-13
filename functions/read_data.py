@@ -52,7 +52,7 @@ def fetch_reviews(dataset_path, max_csv_size = MAX_CSV_SIZE,early_stop = 0):
                             if early_stop and csv_count == early_stop : 
                                 break
                     else:
-                        (key,value) = line.split(":", 1)
+                        (key,value) = line.split(": ", 1)
                         #BeerAdvocate has one column called "review" that is useless and makes everything harder
                         if key != "review":
                             review.append(value.rstrip())
