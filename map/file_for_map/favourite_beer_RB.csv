@@ -1,0 +1,224 @@
+,index,location,beer_name,beer_id,style,brewery_name,count,cumulated_rating,normalized_rating
+0,0,Abkhazia,No beer with enough votes,-1,-,-,1,3.4188764911269764,0
+1,6,Afghanistan,No beer with enough votes,-1,-,-,1,3.185543157793642,0
+2,29,Albania,No beer with enough votes,-1,-,-,1,3.252209824460309,0
+3,35,Algeria,No beer with enough votes,-1,-,-,1,2.3133209355714204,0
+4,72,American Samoa,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+5,73,Andorra,No beer with enough votes,-1,-,-,1,4.0252378142821925,0
+6,234,Antigua and Barbuda,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+7,569,Argentina,Quilmes Cristal,7485,Pale Lager,Cerveceria Malteria Quilmes SAICAY (InBev),13,29.7632007144997,2.2894769780384383
+8,661,Armenia,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+9,666,Ascension Island,No beer with enough votes,-1,-,-,1,3.808902737846136,0
+10,16548,Australia,Redoak Baltic Porter,50112,Baltic Porter,Redoak Boutique Beer Cafe,14,61.24732993889495,4.3748092813496395
+11,27992,Austria,Rochefort Trappistes 10,2360,Abt/Quadrupel,Brasserie Rochefort,11,46.726400721615875,4.247854611055988
+12,29999,Azerbaijan,No beer with enough votes,-1,-,-,1,3.7355431577936415,0
+13,30011,Bahamas,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+14,30017,Bangladesh,No beer with enough votes,-1,-,-,1,2.528400300650786,0
+15,30032,Barbados,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+16,30035,Belarus,No beer with enough votes,-1,-,-,1,4.311211606991504,0
+17,35523,Belgium,3 Fonteinen Zenne y Frontera,358322,Lambic Style - Unblended,Brouwerij 3 Fonteinen,14,62.052623736067574,4.432330266861969
+18,65971,Belize,No beer with enough votes,-1,-,-,1,3.2105431577936425,0
+19,65977,Bermuda,No beer with enough votes,-1,-,-,1,5.0,0
+20,67449,Bolivia,No beer with enough votes,-1,-,-,1,3.635949661858683,0
+21,68314,Bosnia and Herzegovina,No beer with enough votes,-1,-,-,1,3.835543157793643,0
+22,68436,Botswana,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+23,72483,Brazil,Westvleteren Extra 8,4935,Belgian Strong Ale,Westvleteren Abdij St. Sixtus,11,47.19660524387495,4.2906004767159045
+24,72622,Bulgaria,No beer with enough votes,-1,-,-,1,4.153511907793643,0
+25,72965,Burkina Faso,No beer with enough votes,-1,-,-,1,1.3355431577936423,0
+26,72967,Burundi,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+27,72968,Cambodia,No beer with enough votes,-1,-,-,1,3.5550088066486047,0
+28,96817,Canada,De Dolle Speciaal Brouwsel 20,8147,Sour Red/Brown,De Dolle Brouwers,14,62.701403774848174,4.478671698203441
+29,158438,Cayman Islands,No beer with enough votes,-1,-,-,1,4.300927773178258,0
+30,159527,Chile,Kunstmann Torobayo Pale Ale,7122,English Pale Ale,Cervecería Kunstmann,12,44.90140779593374,3.7417839829944786
+31,160368,China,No beer with enough votes,-1,-,-,1,2.6547739270244124,0
+32,162002,Colombia,No beer with enough votes,-1,-,-,1,3.127411669904369,0
+33,162317,Costa Rica,No beer with enough votes,-1,-,-,1,3.5355431577936427,0
+34,163533,Croatia,Bevog Rudeen Black IPA,317259,Black IPA,Bevog Brewery,11,48.82452331193498,4.438593028357726
+35,174306,Cuba,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+36,175099,Cyprus,KEO,10508,Pale Lager,KEO,13,32.14473801248048,2.4726721548061907
+37,185561,Czech Republic,Rochefort Trappistes 10,2360,Abt/Quadrupel,Brasserie Rochefort,12,51.397201781931166,4.283100148494264
+38,189112,Dem Rep of Congo,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+39,238133,Denmark,Närke Kaggen Stormaktsporter,58057,Imperial Stout,Närke Kulturbryggeri,49,227.51999340081662,4.643265171445237
+40,265020,Dominican Republic,No beer with enough votes,-1,-,-,1,2.929385522325663,0
+41,266732,East Timor,No beer with enough votes,-1,-,-,1,0.8188764911269757,0
+42,266735,Ecuador,No beer with enough votes,-1,-,-,1,4.940197812448298,0
+43,267103,Egypt,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+44,267108,El Salvador,No beer with enough votes,-1,-,-,1,5.0,0
+45,337495,England,Shepherd Neame / Stone California Double IPA,85733,India Pale Ale (IPA),Shepherd Neame,22,98.3269339081973,4.4694060867362415
+46,370526,Estonia,Rochefort Trappistes 10,2360,Abt/Quadrupel,Brasserie Rochefort,21,91.01590683150985,4.334090801500469
+47,375879,Falkland Islands,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+48,375880,Faroe Islands,No beer with enough votes,-1,-,-,1,3.2721265711782093,0
+49,385335,Fiji Islands,No beer with enough votes,-1,-,-,1,2.818876491126976,0
+50,412362,Finland,Närke Kaggen Stormaktsporter,58057,Imperial Stout,Närke Kulturbryggeri,16,73.1631853873581,4.572699086709881
+51,439121,France,Struise Cuvée Delphine,94955,Imperial Stout,De Struise Brouwers,15,62.940330213847034,4.196022014256469
+52,440902,French Guiana,No beer with enough votes,-1,-,-,1,0.8219067941572789,0
+53,459868,Germany,Goose Island Bourbon County Stout,8909,Imperial Stout,Goose Island Beer Company &#40;AB-InBev&#41;,19,84.24458908628736,4.433925741383545
+54,495299,Ghana,No beer with enough votes,-1,-,-,1,4.118876491126976,0
+55,499061,Greece,Rochefort Trappistes 10,2360,Abt/Quadrupel,Brasserie Rochefort,11,46.53639966710099,4.230581787918272
+56,500343,Greenland,No beer with enough votes,-1,-,-,1,3.671950924783934,0
+57,500652,Guam,No beer with enough votes,-1,-,-,1,3.677601981323055,0
+58,501098,Guatemala,No beer with enough votes,-1,-,-,1,4.520728342978828,0
+59,501177,Haiti,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+60,501178,Hawaii,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+61,501180,Honduras,No beer with enough votes,-1,-,-,1,3.298876491126977,0
+62,501195,Hong Kong,No beer with enough votes,-1,-,-,1,3.193550970293643,0
+63,511688,Hungary,Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,12,55.492983315990294,4.624415276332525
+64,512080,Iceland,No beer with enough votes,-1,-,-,1,4.019780883891834,0
+65,514305,India,No beer with enough votes,-1,-,-,1,1.6120000342505194,0
+66,515207,Indonesia,No beer with enough votes,-1,-,-,1,3.024069727841952,0
+67,516054,Iran,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+68,516055,Iraq,No beer with enough votes,-1,-,-,1,3.785543157793642,0
+69,523139,Ireland,Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,15,66.42943596069006,4.428629064046004
+70,523551,Isle of Man,No beer with enough votes,-1,-,-,1,1.7215431577936426,0
+71,526843,Israel,Chouffe Houblon Dobbelen IPA Tripel,56757,Imperial IPA,Brasserie dAchouffe  (Duvel-Moortgat),11,44.64054147840707,4.058231043491552
+72,557775,Italy,Westvleteren Extra 8,4935,Belgian Strong Ale,Westvleteren Abdij St. Sixtus,37,156.29800738855897,4.224270469961053
+73,558601,Ivory Coast,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+74,558602,Jamaica,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+75,570896,Japan,Rochefort Trappistes 10,2360,Abt/Quadrupel,Brasserie Rochefort,15,63.07222423365334,4.204814948910222
+76,575547,Jersey,No beer with enough votes,-1,-,-,1,4.368876491126976,0
+77,575639,Jordan,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+78,575647,Kazakhstan,No beer with enough votes,-1,-,-,1,4.736894509144994,0
+79,575684,Kenya,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+80,575694,Kosovo,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+81,575696,Kyrgyzstan,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+82,575697,Laos,No beer with enough votes,-1,-,-,1,4.050249040146584,0
+83,577750,Latvia,Malduguns Lauvas Pacietība,245966,Imperial IPA,Malduguns,13,49.86710553551541,3.8359311950396466
+84,579071,Lebanon,No beer with enough votes,-1,-,-,2,7.808586315587285,0
+85,579103,Lesotho,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+86,579104,Liechtenstein,No beer with enough votes,-1,-,-,1,3.9855431577936415,0
+87,579109,Lithuania,No beer with enough votes,-1,-,-,1,3.455083387678701,0
+88,580811,Luxembourg,No beer with enough votes,-1,-,-,1,3.899320102498423,0
+89,583600,Macau,No beer with enough votes,-1,-,-,1,3.135543157793643,0
+90,583602,Macedonia,No beer with enough votes,-1,-,-,1,2.8633209355714206,0
+91,583639,Malaysia,No beer with enough votes,-1,-,-,1,3.264196209094396,0
+92,591889,Malta,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+93,591903,Marshall Islands,No beer with enough votes,-1,-,-,1,3.836857666070176,0
+94,592930,Mauritius,No beer with enough votes,-1,-,-,2,5.494697426698396,0
+95,595126,Mexico,Het Anker Gouden Carolus Classic,4637,Belgian Strong Ale,Brouwerij Het Anker,14,56.7516380492758,4.053688432091128
+96,597993,Micronesia,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+97,597994,Moldova,No beer with enough votes,-1,-,-,1,3.566886441375732,0
+98,601539,Monaco,No beer with enough votes,-1,-,-,1,1.9855431577936429,0
+99,601545,Mongolia,No beer with enough votes,-1,-,-,1,3.3355431577936425,0
+100,601547,Montenegro,No beer with enough votes,-1,-,-,1,3.8105431577936426,0
+101,601564,Montserrat,No beer with enough votes,-1,-,-,1,3.885543157793643,0
+102,601578,Morocco,No beer with enough votes,-1,-,-,1,3.3255431577936423,0
+103,601590,Mozambique,No beer with enough votes,-1,-,-,1,3.622100697476183,0
+104,603607,Nagorno-Karabakh,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+105,603608,Namibia,No beer with enough votes,-1,-,-,1,3.385543157793643,0
+106,603623,Nepal,No beer with enough votes,-1,-,-,1,4.735543157793643,0
+107,630443,Netherlands,Närke Kaggen Stormaktsporter,58057,Imperial Stout,Närke Kulturbryggeri,19,86.41353769884408,4.548080931518109
+108,654441,New Zealand,Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,13,56.240143116960596,4.326164855150815
+109,654896,Nicaragua,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+110,654899,Nigeria,No beer with enough votes,-1,-,-,1,2.818876491126976,0
+111,654904,Norfolk Island,No beer with enough votes,-1,-,-,1,4.029987602238087,0
+112,654953,North Korea,No beer with enough votes,-1,-,-,1,3.456221123895338,0
+113,655543,Northern Ireland,No beer with enough votes,-1,-,-,1,3.140875903496595,0
+114,686101,Norway,Närke Kaggen Stormaktsporter,58057,Imperial Stout,Närke Kulturbryggeri,19,88.65960683001228,4.666295096316436
+115,700870,Oman,No beer with enough votes,-1,-,-,1,1.6764522487027336,0
+116,700881,Pakistan,No beer with enough votes,-1,-,-,1,3.355543157793642,0
+117,700909,Palestine,No beer with enough votes,-1,-,-,1,1.5055431577936425,0
+118,700917,Panama,No beer with enough votes,-1,-,-,1,3.2392621660581056,0
+119,701213,Papua New Guinea,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+120,701214,Paraguay,No beer with enough votes,-1,-,-,1,2.91470982446031,0
+121,701275,Peru,No beer with enough votes,-1,-,-,1,3.3480431577936427,0
+122,701582,Philippines,No beer with enough votes,-1,-,-,1,3.792408146351996,0
+123,703719,Poland,Baladin Xyauyù Barrel,172363,Barley Wine,Le Baladin,12,52.72011008357818,4.393342506964848
+124,728078,Portugal,Franziskaner Hefe-Weissbier / Weissbier Naturtrub,1088,German Hefeweizen,Spaten-Franziskaner-Bräu &#40;InBev&#41;,11,41.61681436941008,3.7833467608554616
+125,731677,Puerto Rico,No beer with enough votes,-1,-,-,1,4.490020769733941,0
+126,733090,Romania,Ground Zero Morning Glory,300727,India Pale Ale (IPA),Ground Zero,11,38.12744456932597,3.466131324484179
+127,738073,Russia,Schneider Weisse Aventinus,2224,Weizen Bock,Schneider Weisse G. Schneider & Sohn GmbH,14,57.21896183146025,4.08706870224716
+128,739048,Saint Helena,No beer with enough votes,-1,-,-,1,3.2081888977039568,0
+129,739495,Saint Lucia,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+130,739496,Saint Vincent and The Grenadines,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+131,739497,San Marino,No beer with enough votes,-1,-,-,1,4.885543157793642,0
+132,739506,Saudi Arabia,No beer with enough votes,-1,-,-,1,2.538174736741012,0
+133,768795,Scotland,Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,34,143.8329147085304,4.230379844368541
+134,771647,Serbia,Jelen Pivo,12285,Pale Lager,Apatinska Pivara (MolsonCoors),15,38.80669186849537,2.5871127912330247
+135,773408,Singapore,No beer with enough votes,-1,-,-,1,3.687125436274656,0
+136,774538,Sint Maarten,No beer with enough votes,-1,-,-,1,3.0355431577936427,0
+137,784180,Slovak Republic,Stupavar Behind The Hills Smoked Porter 17°,378567,Smoked,Pivovar Stupavar,15,62.67762894108192,4.178508596072128
+138,786104,Slovakia,No beer with enough votes,-1,-,-,1,2.2630431577936423,0
+139,787207,Slovenia,Chimay Bleue (Blue) / Grande Réserve,53,Belgian Strong Ale,Chimay,11,47.15033001834556,4.286393638031414
+140,791918,South Africa,Duvel,1434,Belgian Strong Ale,Duvel Moortgat,16,64.07571424117502,4.004732140073439
+141,793795,South Korea,No beer with enough votes,-1,-,-,2,7.583553922843259,0
+142,809262,Spain,Struise Pannepot Grand Reserva,83305,Belgian Strong Ale,De Struise Brouwers,15,63.28345196472242,4.218896797648161
+143,811738,Sudan,No beer with enough votes,-1,-,-,1,3.352209824460309,0
+144,813140,Sweden,AleSmith Speedway Stout - Bourbon Barrel Aged: Vietnamese Coffee,296243,Imperial Stout,AleSmith Brewing Company,11,49.095663732029614,4.463242157457238
+145,871561,Switzerland,AleSmith Speedway Stout,14232,Imperial Stout,AleSmith Brewing Company,12,52.23937001898391,4.353280834915326
+146,887802,Syria,No beer with enough votes,-1,-,-,1,2.3355431577936425,0
+147,887805,Taiwan,No beer with enough votes,-1,-,-,2,6.580675858070946,0
+148,889383,Tajikistan,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+149,889384,Tanzania,No beer with enough votes,-1,-,-,1,3.603724975975461,0
+150,889407,Thailand,No beer with enough votes,-1,-,-,1,2.9690331958505043,0
+151,899657,Tibet,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+152,899658,Togo,No beer with enough votes,-1,-,-,1,3.5855431577936425,0
+153,899660,Trinidad and Tobago,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+154,899663,Tunisia,No beer with enough votes,-1,-,-,3,9.456629473380929,0
+155,900536,Turkey,Efes Pilsen (Pilsener),3922,Pilsener,Anadolu Efes,22,69.64577947735455,3.1657172489706613
+156,903010,Tuvalu,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+157,903011,Uganda,No beer with enough votes,-1,-,-,1,2.548043157793643,0
+158,904054,Ukraine,Lvivske Porter,25805,Baltic Porter,Lvivska Pivovarnya (Carlsberg),11,38.31788709135722,3.4834442810324746
+159,905185,United Arab Emirates,No beer with enough votes,-1,-,-,1,3.7855431577936423,0
+160,917974,"United States, Alabama",Westvleteren Extra 8,4935,Belgian Strong Ale,Westvleteren Abdij St. Sixtus,11,46.083639380982376,4.1894217619074885
+161,918727,"United States, Alaska",Alaskan Smoked Porter,16,Smoked,Alaskan Brewing Company,13,50.52030995092766,3.886177688532897
+162,946156,"United States, Arizona",Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,32,136.04108617555363,4.251283942986051
+163,950009,"United States, Arkansas",Rochefort Trappistes 10,2360,Abt/Quadrupel,Brasserie Rochefort,13,54.35925064280984,4.18148081867768
+164,977438,"United States, California",Hair of the Dog Dave,23897,Barley Wine,Hair of the Dog Brewing Company,15,64.49888068731867,4.299925379154578
+165,1052038,"United States, Colorado",Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,47,200.48155292702546,4.265564955894159
+166,1065684,"United States, Connecticut",Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,12,51.10370122125835,4.258641768438196
+167,1071586,"United States, Delaware",Rochefort Trappistes 10,2360,Abt/Quadrupel,Brasserie Rochefort,12,49.606742012287015,4.133895167690585
+168,1105761,"United States, Florida",Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,94,398.98167837808893,4.244485940192435
+169,1128509,"United States, Georgia",Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,40,169.85219436796606,4.246304859199151
+170,1129290,"United States, Hawaii",No beer with enough votes,-1,-,-,1,3.0418324659697427,0
+171,1131382,"United States, Idaho",AleSmith Speedway Stout,14232,Imperial Stout,AleSmith Brewing Company,15,63.576729339325375,4.238448622621692
+172,1161254,"United States, Illinois",Goose Island Bourbon County Stout - Rare 2010,116684,Imperial Stout,Goose Island Beer Company &#40;AB-InBev&#41;,39,168.5021814187108,4.320568754325918
+173,1210318,"United States, Indiana",Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,46,194.38569210819543,4.225775915395553
+174,1215844,"United States, Iowa",Goose Island Bourbon County Stout - Coffee,66358,Imperial Stout,Goose Island Beer Company &#40;AB-InBev&#41;,12,50.619651257911094,4.218304271492591
+175,1235016,"United States, Kansas",Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,12,52.06207219664378,4.338506016386982
+176,1247957,"United States, Kentucky",Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,16,71.06044318511908,4.441277699069943
+177,1249093,"United States, Louisiana",Beamish Irish Stout,1,Dry Stout,Heineken Ireland,11,44.584690566192535,4.053153687835685
+178,1260451,"United States, Maine",Rochefort Trappistes 10,2360,Abt/Quadrupel,Brasserie Rochefort,11,44.92657153815394,4.084233776195813
+179,1287220,"United States, Maryland",Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,45,192.02968886778748,4.267326419284166
+180,1303573,"United States, Massachusetts",Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,34,142.55437345772287,4.1927756899330255
+181,1313560,"United States, Michigan",Goose Island Bourbon County Stout - Rare 2010,116684,Imperial Stout,Goose Island Beer Company &#40;AB-InBev&#41;,13,54.503603233945114,4.192584864149624
+182,1341340,"United States, Minnesota",Goose Island Bourbon County Stout - Rare 2010,116684,Imperial Stout,Goose Island Beer Company &#40;AB-InBev&#41;,15,64.6813648085655,4.3120909872377
+183,1363579,"United States, Mississippi",Samuel Smiths Oatmeal Stout,87,Sweet Stout,Samuel Smith,12,49.00870341195784,4.084058617663153
+184,1380332,"United States, Missouri",Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,25,107.36135855336641,4.294454342134657
+185,1380769,"United States, Montana",No beer with enough votes,-1,-,-,1,3.3401177966379447,0
+186,1387410,"United States, Nebraska",Goose Island Bourbon County Stout,8909,Imperial Stout,Goose Island Beer Company &#40;AB-InBev&#41;,15,66.03513686352292,4.402342457568195
+187,1393131,"United States, Nevada",AleSmith Speedway Stout,14232,Imperial Stout,AleSmith Brewing Company,12,51.07390031816453,4.256158359847045
+188,1419769,"United States, New Hampshire",Portsmouth Kate The Great Russian Imperial Stout,51898,Imperial Stout,Portsmouth Brewery,11,46.55769701984427,4.232517910894933
+189,1460712,"United States, New Jersey",Westvleteren Extra 8,4935,Belgian Strong Ale,Westvleteren Abdij St. Sixtus,41,172.20140436992244,4.2000342529249375
+190,1462016,"United States, New Mexico",Arrogant Bastard Ale,1315,American Strong Ale,Arrogant Brewing,12,49.69268238140142,4.141056865116785
+191,1478838,"United States, New York",Goose Island Bourbon County Stout - Rare 2010,116684,Imperial Stout,Goose Island Beer Company &#40;AB-InBev&#41;,12,51.93997996394798,4.328331663662332
+192,1526336,"United States, North Carolina",Rochefort Trappistes 10,2360,Abt/Quadrupel,Brasserie Rochefort,69,290.6503325734188,4.21232366048433
+193,1534312,"United States, North Dakota",No beer with enough votes,-1,-,-,1,3.650801869514868,0
+194,1549084,"United States, Ohio",Goose Island Bourbon County Stout - Rare 2010,116684,Imperial Stout,Goose Island Beer Company &#40;AB-InBev&#41;,16,69.36436299652604,4.3352726872828775
+195,1576120,"United States, Oklahoma",Rochefort Trappistes 10,2360,Abt/Quadrupel,Brasserie Rochefort,17,73.8990857430676,4.347005043709859
+196,1586243,"United States, Oregon",Hair of the Dog Matt,99157,American Strong Ale,Hair of the Dog Brewing Company,16,68.03508924001451,4.252193077500907
+197,1609158,"United States, Pennsylvania",De Dolle Stille Nacht Reserva 2000,19633,Belgian Strong Ale,De Dolle Brouwers,11,49.31109023135386,4.482826384668533
+198,1641550,"United States, Rhode Island",Chimay Bleue (Blue) / Grande Réserve,53,Belgian Strong Ale,Chimay,11,44.98551444760041,4.089592222509128
+199,1646082,"United States, South Carolina",Goose Island Bourbon County Stout,8909,Imperial Stout,Goose Island Beer Company &#40;AB-InBev&#41;,11,46.256325489612216,4.205120499055656
+200,1650999,"United States, South Dakota",No beer with enough votes,-1,-,-,1,2.881897324460309,0
+201,1670792,"United States, Tennessee",Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,24,104.50632295733543,4.3544301232223095
+202,1694764,"United States, Texas",Närke Kaggen Stormaktsporter,58057,Imperial Stout,Närke Kulturbryggeri,11,47.5339564344007,4.3212687667637
+203,1710765,"United States, Utah",Guinness Draught,1267,Dry Stout,St. Jamess Gate (Diageo),11,43.21189876485626,3.9283544331687508
+204,1715827,"United States, Vermont",Alchemist Heady Topper,32329,Imperial IPA,The Alchemist,22,86.0804744440668,3.9127488383666726
+205,1725426,"United States, Virginia",AleSmith Speedway Stout - Bourbon Barrel Aged,28173,Imperial Stout,AleSmith Brewing Company,13,57.11474290304782,4.393441761772909
+206,1771040,"United States, Washington",Goose Island Bourbon County Stout - Rare 2010,116684,Imperial Stout,Goose Island Beer Company &#40;AB-InBev&#41;,16,68.35839786930808,4.272399866831755
+207,1799889,"United States, West Virginia",Great Lakes Edmund Fitzgerald Porter,1226,Porter,Great Lakes Brewing &#40;Ohio&#41;,12,48.122594068696515,4.0102161723913765
+208,1829695,"United States, Wisconsin",Westvleteren 12 (XII),4934,Abt/Quadrupel,Westvleteren Abdij St. Sixtus,46,198.7569806865734,4.320803927968987
+209,1830599,"United States, Wyoming",No beer with enough votes,-1,-,-,1,3.9892557326439424,0
+210,1891799,Unknown,Ølfabrikken Porter,52649,Baltic Porter,Bryggeriet Ølfabrikken (Gourmetbryggeriet - Harboe),12,49.66172100707475,4.138476750589563
+211,1891923,Uruguay,No beer with enough votes,-1,-,-,1,2.604897996503321,0
+212,1892056,Uzbekistan,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+213,1892059,Vanuatu,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+214,1892061,Vatican City,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+215,1892064,Venezuela,No beer with enough votes,-1,-,-,1,3.269741044441097,0
+216,1894558,Vietnam,No beer with enough votes,-1,-,-,1,2.013320935571421,0
+217,1894593,Virgin Islands (British),No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+218,1894594,Virgin Islands (U.S.),No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+219,1894633,Wales,No beer with enough votes,-1,-,-,1,2.835543157793643,0
+220,1895798,Yemen,No beer with enough votes,-1,-,-,1,3.335543157793643,0
+221,1895800,Zambia,No beer with enough votes,-1,-,-,1,3.2855431577936427,0
+222,1895802,Zimbabwe,No beer with enough votes,-1,-,-,1,3.435543157793642,0
