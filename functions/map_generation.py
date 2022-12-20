@@ -76,7 +76,7 @@ def generate_map(filename, map_name, usa= True,
     ''' This function generate an interactive map of the world (and USA)
     with the avreage score of beer per countries and their favored beer's style. 
     Is is assumed it will be used in a file in the root of the project. 
-    If it's not the case see: source_file_path and html_file_path.
+    If it's not the case, see: source_file_path and html_file_path.
 
     Parameters
     ----------

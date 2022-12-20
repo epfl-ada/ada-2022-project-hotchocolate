@@ -70,22 +70,22 @@ STATES = {
 }
 
 
-def generate_map(filename, map_name, usa= True, 
+def generate_map(filename, map_name, usa= False, 
                  html = True, show_map = True,
                  title = '',
                  source_file_path = 'map/file_for_map/', 
                  html_file_path = 'map/html/'):
 
-    ''' Author: Gabriel Benato @HOTCHOCOLATE, ADA2022
+    ''' Author: Gabriel Benato @HOTCHOCOLATE, ADA2022 (mdr Joao)
     This function generate an interactive map of the world (and USA)
     with the average score of beer per countries and their favored beer's style. 
-    Is is assumed it will be used in a file in the root of the project. 
+    Is is assumed it will be used in a file at the root of the project. 
     If it's not the case see: source_file_path and html_file_path.
 
     Parameters
     ----------
     filename         (string)  :  Name of the source file containing the necessary dataframe for map generation 
-                                  should contain a 'location', 'style' and 'avg_computed' column.
+                                  should contain a 'location', 'style', 'normalized_rating', 'pos_words' and 'neg_words' column.
     map_name         (string)  :  HTML file's name for the resulting interactive map.
     usa              (boolean) :  Activate the generation of the USA's map.
     html             (boolean) :  Activate the generation of html file.
@@ -100,7 +100,7 @@ def generate_map(filename, map_name, usa= True,
     '''
 
     data = pd.read_csv(source_file_path + filename)
-    hover_data = np.stack((data["beer_name"],data["brewery_name"],data["normalized_rating"],data["style"]), axis=-1)
+    
     ### NOTE: Clean corrrupted data but we should do it before 
     for i, e in enumerate(data['location']):
         if "http" in e or "<" in e:
@@ -112,24 +112,24 @@ def generate_map(filename, map_name, usa= True,
     # We will also set-up a way to have a look only in the United Sates 
     location_country = data.copy()
     mask = [False] * data.shape[0]
-    second = False
     
     for j, country in enumerate(data['location']):
         if "United States" in country:
             mask[j] = True #Prepare mask for united states only dataframe (united_states)
-            if second:
-                #get rid of all the occurance of United States except best one
-                location_country = location_country.drop(j) 
-            else:
+            if "California" in country:
                 #Delete the State
                 location_country['location'][j] = "United States"
-            second = True
-            
-    if usa:  #Only activate if we want an USA's view      
-        united_states = data[mask]
-        for k, state in enumerate(united_states['location']):
-            #Only keep the states 
-            united_states['location'][k] = state.split('States, ',1)[1]
+            else:
+                #get rid of all the occurance of United States except Florida since it is the most populated state
+                location_country = location_country.drop(j) 
+                
+    hover_data_world = np.stack((location_country["beer_name"],
+                                 location_country["brewery_name"],
+                                 location_country["normalized_rating"],
+                                 location_country["style"],
+                                 location_country["pos_words"],
+                                 location_country["neg_words"]), axis=-1)
+
     #Plot the worldwide figure
     fig_world = go.Figure(data = go.Choropleth(
         locations = location_country['location'], #counties's nams are used to place data on the world map
@@ -143,12 +143,14 @@ def generate_map(filename, map_name, usa= True,
         marker_line_width=0.5,
         colorbar_tickprefix = 'average rating ',
         colorbar_title = "Mean average rating",
-        customdata = hover_data,
+        customdata = hover_data_world,
         hovertemplate="""   <br><b>Country</b>: %{text}
                             <br><b>Beer</b>: %{customdata[0]}
                             <br><b>Brewery</b>: %{customdata[1]}
                             <br><b>Mean Rating</b>: %{customdata[2]:.2f}
-                            <br><b>Type</b>: %{customdata[3]}<br><extra></extra>"""
+                            <br><b>Type</b>: %{customdata[3]}
+                            <br><b>Positive words in reviews</b>: %{customdata[4]}
+                            <br><b>Positive words in reviews</b>: %{customdata[5]}<br><extra></extra>"""
     ))
 
     fig_world.update_layout(
@@ -163,36 +165,79 @@ def generate_map(filename, map_name, usa= True,
     if html : 
         fig_world.write_html(html_file_path + map_name +"_country.html")
         
-    # #Activate if we want USA map
-    # if usa:
-    #     #switch state by their abbreviation to fit 
-    #     #the locationmode 'USA-states' of the plotly library
-    #     united_states.location = united_states.location.map(STATES)
-    #     #plot the usa map
-    #     fig_usa = go.Figure(data = go.Choropleth(
-    #         locations = united_states['location'], #abbreviation are used to place data on the USA map
-    #         locationmode= 'USA-states',
-    #         z = united_states['normalized_rating'], #data that describes the choropleth value-to-color mapping
-    #         text = 'Favored style: '+ united_states['style'], #pop-up for each country 
-    #         colorscale = 'Viridis',
-    #         autocolorscale=False,
-    #         reversescale=True,
-    #         marker_line_color='darkgray',
-    #         marker_line_width=0.5,
-    #         colorbar_tickprefix = 'average rating ',
-    #         colorbar_title = 'style of beer<br>and average ranking<br>in USA',
-    #     ))
-
-    #     fig_usa.update_layout(
-    #         title_text='Beer style and average score per countries',
-    #         geo=dict( scope='usa') #switch from world-map to USA
-    #     )
-    #     #print the map
-    #     if show_map :
-    #         fig_usa.show()
-    #     #generate html file of USA map
-    #     if html :
-    #         fig_usa.write_html(html_file_path + map_name +"_usa.html")
-    # return
+    #Activate if we want USA map
+    if usa:
+        united_states = data[mask]
+        for k, state in enumerate(united_states['location']):
+            #Only keep the states 
+            united_states['location'][k] = state.split('States, ',1)[1]
+            
+        #switch state by their abbreviation to fit 
+        #the locationmode 'USA-states' of the plotly library
+        united_states.location = united_states.location.map(STATES)
+        hover_data_world = np.stack((united_states["beer_name"],
+                                 location_country["brewery_name"],
+                                 location_country["normalized_rating"],
+                                 location_country["style"]), axis=-1)
+        
+        #plot the usa map
+        fig_usa = go.Figure(data = go.Choropleth(
+            locations = united_states['location'], #abbreviation are used to place data on the USA map
+            locationmode= 'USA-states',
+            z = united_states['normalized_rating'], #data that describes the choropleth value-to-color mapping
+            text = location_country['location'], #pop-up for each country 
+            colorscale = 'Viridis',
+            autocolorscale=False,
+            reversescale=True,
+            marker_line_color='darkgray',
+            marker_line_width=0.5,
+            colorbar_tickprefix = 'average rating ',
+            colorbar_title = 'Mean average rating',
+            customdata = hover_data,
+            hovertemplate="""   <br><b>States</b>: %{text}
+                            <br><b>Beer</b>: %{customdata[0]}
+                            <br><b>Brewery</b>: %{customdata[1]}
+                            <br><b>Mean Rating</b>: %{customdata[2]:.2f}
+                            <br><b>Type</b>: %{customdata[3]}
+                            <br><b>Positive words in reviews</b>: %{customdata[4]}
+                            <br><b>Positive words in reviews</b>: %{customdata[5]}<br><extra></extra>"""
+    
 
     
+        ))
+
+        fig_usa.update_layout(
+            title_text='Zoom on the USA',
+            geo=dict( scope='usa'), #switch from world-map to USA
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)', 
+        )
+        #print the map
+        if show_map :
+            fig_usa.show()
+        #generate html file of USA map
+        if html :
+            fig_usa.write_html(html_file_path + map_name +"_usa.html")
+    return
+
+def combine_neg_pos_and_favoured_beer(neg_pos_filename, favoured_filename, combined_filename, 
+                                       source_file_path = 'map/file_for_map/'):
+    ''' 
+    Function combines dataset from positive-negative word analysis and favoured beer analysis.
+    
+    neg_pos_filename  (string)  :  Name of the source file from the favoured beer analysis.
+    favoured_filename (string)  :  Name of the source file from the favoured beer analysis.
+    combined_filename (string)  :  Name of the resulting combined file.
+    source_file_path  (string)  :  Path to the source files
+    '''
+    neg_pos = pd.read_csv(source_file_path + neg_pos_filename)
+    favoured_beer = pd.read_csv(source_file_path + favoured_filename)
+
+
+    merged_data = top_ranked_adv_country.merge(happy[["location","neg_words","pos_words"]],
+                                               how="outer",left_on="location",right_on="location")
+
+    merged_data['pos_words'] = merged_data['pos_words'].fillna('Unknown')
+    merged_data['neg_words'] = merged_data['neg_words'].fillna('Unknown')
+    merged_data.to_csv(source_file_path + combined_filename)
+    return
