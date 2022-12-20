@@ -175,10 +175,12 @@ def generate_map(filename, map_name, usa= False,
         #switch state by their abbreviation to fit 
         #the locationmode 'USA-states' of the plotly library
         united_states.location = united_states.location.map(STATES)
-        hover_data_world = np.stack((united_states["beer_name"],
-                                 location_country["brewery_name"],
-                                 location_country["normalized_rating"],
-                                 location_country["style"]), axis=-1)
+        hover_data_usa = np.stack((united_states["beer_name"],
+                                 united_states["brewery_name"],
+                                 united_states["normalized_rating"],
+                                 united_states["style"],
+                                 united_states["pos_words"],
+                                 united_states["neg_words"]), axis=-1)
         
         #plot the usa map
         fig_usa = go.Figure(data = go.Choropleth(
@@ -193,7 +195,7 @@ def generate_map(filename, map_name, usa= False,
             marker_line_width=0.5,
             colorbar_tickprefix = 'average rating ',
             colorbar_title = 'Mean average rating',
-            customdata = hover_data,
+            customdata = hover_data_usa,
             hovertemplate="""   <br><b>States</b>: %{text}
                             <br><b>Beer</b>: %{customdata[0]}
                             <br><b>Brewery</b>: %{customdata[1]}
@@ -234,7 +236,7 @@ def combine_neg_pos_and_favoured_beer(neg_pos_filename, favoured_filename, combi
     favoured_beer = pd.read_csv(source_file_path + favoured_filename)
 
 
-    merged_data = top_ranked_adv_country.merge(happy[["location","neg_words","pos_words"]],
+    merged_data = favoured_beer.merge(neg_pos[["location","neg_words","pos_words"]],
                                                how="outer",left_on="location",right_on="location")
 
     merged_data['pos_words'] = merged_data['pos_words'].fillna('Unknown')
