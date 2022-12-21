@@ -12,7 +12,7 @@ import numpy as np
 import openai
 from sklearn.manifold import TSNE
 from PIL import Image
-import kaleido
+from plotly.subplots import make_subplots
 from io import BytesIO
 import base64
 import os 
@@ -560,3 +560,199 @@ def plot_wordcloud_dropdown():
     fig.show()
     #Export for site
     fig.write_html(f"Images/test_wordclouds.html",config = {'displayModeBar': False})
+
+
+
+def plot_wordcloud_dropdown2():
+    """
+    Plots wordclouds corresponding to beer reviews for all beer styles in RateBeer and BeerAdvocate. Style can be chosen with a dropdown menu
+    """
+
+    # Load images
+    img_list = os.listdir("Images/word_clouds")
+    # Initialize figures
+    fig = go.Figure(layout=go.Layout(width=500, height=500,
+                                    xaxis=dict(range=[280, 680],
+                                            fixedrange = False),
+                                    yaxis=dict(range=[620, 100],
+                                            fixedrange = False
+                                    ),
+                                    ))
+    #List all styles that will be shown
+    style_list_BA = retrieve_style_list("BeerAdvocate")
+    style_list_RB = retrieve_style_list("RateBeer")
+    style_list = style_list_BA + style_list_RB
+    description = ["BeerAdvocate style : " + style for style in style_list_BA] + ["RateBeer style : "+ style for style in style_list]
+    #Create all renderings in the plot
+    for i,style in enumerate(style_list):
+        if "/" in style:
+            style = style.replace("/","")
+        if i < len(style_list_BA):
+            pil_img = Image.open(f'Images/word_clouds/slate_BA_{style}_wordcloud.png') # PIL image object
+        else:
+            pil_img = Image.open(f'Images/word_clouds/slate_RB_{style}_wordcloud.png') # PIL image object
+        prefix = "data:image/png;base64,"
+        with BytesIO() as stream:
+            pil_img.save(stream, format="png")
+            base64_string = prefix + base64.b64encode(stream.getvalue()).decode("utf-8")
+        if i == 0:
+            goImg = go.Image(source=base64_string,
+                            x0=0, 
+                            y0=0,
+                            dx=1,
+                            dy=1,
+                            visible = True,)
+        else:
+            goImg = go.Image(source=base64_string,
+                        x0=0, 
+                        y0=0,
+                        dx=1,
+                        dy=1,
+                        visible = False,)
+        fig.add_trace(goImg)
+        fig.update_traces(
+                    hovertemplate = None,
+                    hoverinfo = "skip")
+    #Create masks to activate only one rendering at a time
+    mask_list = []
+    mask = np.arange(0,len(style_list))
+    for i in range(len(style_list)):
+        mask_list.append(list(mask==i))
+    buttons = [{'label': description[i], 'method':'update','args':[{"visible":mask_list[i]}]} for i,style in enumerate(style_list)]
+    # Add Annotations and Buttons
+
+    fig.update_layout(template="simple_white",
+                updatemenus=[dict(
+                active=1,
+                x=1.05,
+                y=1.1,
+                buttons=buttons,
+            )
+        ])
+    fig.update_xaxes(visible=False)
+    fig.update_yaxes(visible=False)
+    fig.show()
+    #Export for site
+    fig.write_html(f"Images/test_wordclouds.html",config = {'displayModeBar': False})
+
+
+def create_rank_plot(BA_sorted,RB_sorted):
+    """Creates plots of rankings (with option for normalized rankings) for BeerAdvocate and RateBeer datasets"""
+
+    
+    
+    def compute_normalized_ranking(dataframe):
+        dataframe["prix"] =  dataframe.apply(lambda row: re.findall(r"\d+\.\d+",row["prix"])[-1],axis=1)
+        dataframe["normalized_rating"] = (dataframe["avg"]/(dataframe["vol"].astype(float)*dataframe["prix"].astype(float)))
+        dataframe["normalized_rating"] = dataframe["normalized_rating"]
+        dataframe_normalized_sorted = dataframe.sort_values(by="normalized_rating",ascending=False)
+        dataframe_normalized_sorted["normalized_rating"] = dataframe_normalized_sorted["normalized_rating"].apply(lambda x : x*5/dataframe_normalized_sorted["normalized_rating"].max())
+        return dataframe_normalized_sorted
+    RB_normalized = compute_normalized_ranking(RB_sorted)
+    BA_normalized = compute_normalized_ranking(BA_sorted)
+    fig_rank = make_subplots(rows=1, cols=2, horizontal_spacing = 0.1)
+    customdata_BA  = np.stack((BA_sorted['nom'],BA_sorted['brasseur'],BA_sorted['avg'], BA_sorted['type'],BA_sorted['prix']), axis=-1)
+    customdata_RB  = np.stack((RB_sorted['nom'],RB_sorted['brasseur'],RB_sorted['avg'], RB_sorted['type'],RB_sorted['prix']), axis=-1)
+    customdata_normalized_BA  = np.stack((BA_normalized['nom'],BA_normalized['brasseur'],BA_normalized['normalized_rating'], BA_normalized['type'],BA_normalized['prix']), axis=-1)
+    customdata_normalized_RB  = np.stack((RB_normalized['nom'],RB_normalized['brasseur'],RB_normalized['normalized_rating'], RB_normalized['type'],RB_normalized['prix']), axis=-1)
+    fig_rank.update_xaxes(showgrid=False)
+    fig_rank.update_yaxes(autorange = "reversed")
+    fig_rank.add_trace(go.Bar(
+                                        y=RB_sorted["nom"],
+                                        x=RB_sorted["avg"],
+                                        orientation="h",
+                                        visible=True,
+                                        width=1,
+                                        customdata=customdata_RB,
+                                        hovertemplate=""" <br><b>Brew</b>: %{customdata[0]}
+                                                        <br><b>Brewery</b>: %{customdata[1]}
+                                                        <br><b>Mean Rating</b>: %{customdata[2]:.2f}
+                                                        <br><b>Type</b>: %{customdata[3]}
+                                                        <br><b>Price</b>: %{customdata[4]}<br><extra></extra>"""),
+                            row=1,
+                            col=1,)
+    fig_rank.add_trace(go.Bar(
+                                        y=RB_normalized["nom"],
+                                        x=RB_normalized["normalized_rating"],
+                                        orientation="h",
+                                        visible=False,
+                                        width=1,
+                                        customdata=customdata_normalized_RB,
+                                        hovertemplate=""" <br><b>Brew</b>: %{customdata[0]}
+                                                        <br><b>Brewery</b>: %{customdata[1]}
+                                                        <br><b>Rating normalized by price and serving volume</b>: %{customdata[2]:.2f}
+                                                        <br><b>Type</b>: %{customdata[3]}
+                                                        <br><b>Price</b>: %{customdata[4]}<br><extra></extra>"""),
+                            row=1,
+                            col=1,)
+    fig_rank.add_trace(go.Bar(
+                                        y=BA_sorted["nom"],
+                                        x=BA_sorted["avg"],
+                                        orientation="h",
+                                        visible=True,
+                                        width=1,
+
+                                        customdata=customdata_BA,
+                                        hovertemplate=""" <br><b>Brew</b>: %{customdata[0]}
+                                                        <br><b>Brewery</b>: %{customdata[1]}
+                                                        <br><b>Brewery</b>: %{customdata[2]:.2f}
+                                                        <br><b>Type</b>: %{customdata[3]}
+                                                        <br><b>Price</b>: %{customdata[4]}<br><extra></extra>"""),
+                            row=1,
+                            col=2,)
+    fig_rank.add_trace(go.Bar(
+                                        y=BA_normalized["nom"],
+                                        x=BA_normalized["normalized_rating"],
+                                        orientation="h",
+                                        visible=False,
+                                        width=1,
+                                        customdata=customdata_normalized_BA,
+                                        hovertemplate=""" <br><b>Brew</b>: %{customdata[0]}
+                                                        <br><b>Brewery</b>: %{customdata[1]}
+                                                        <br><b>Rating normalized by price and serving volume</b>: %{customdata[2]:.2f}
+                                                        <br><b>Type</b>: %{customdata[3]}
+                                                        <br><b>Price</b>: %{customdata[4]}<br><extra></extra>"""),
+                            row=1,
+                            col=2,)
+
+
+    fig_rank.update_layout( autosize=False,
+                            margin=dict(t=0, b=0, l=0, r=0),
+                            paper_bgcolor='rgba(0,0,0,0)',
+                            plot_bgcolor='rgba(0,0,0,0)', 
+                            xaxis_title="Beer rating",
+                            yaxis_title="Beer name",
+                       )
+
+    fig_rank.update_layout(showlegend=False,
+                            annotations=[
+                                dict(text="Normalize by price and volume:", x=0.88, xref="paper", y=1.05, yref="paper",
+                                 align="left", showarrow=False)],
+                           title_text='Ranking of SAT beers according to RateBeer and BeerAdvocate',
+                           width=900,
+                           height=1000,
+                           xaxis2=dict(range=[0, 5],title="RateBeer rating"),
+                           xaxis1=dict(range=[0, 5],title="BeerAdvocate rating"), 
+                           updatemenus=[
+                                dict(
+                                    type="buttons",
+                                    direction="right",
+                                    active=0,
+                                    x=1,
+                                    y=1.05,
+                                    buttons=([
+                                        dict(label="No",
+                                             method="update",
+                                             args=[{"visible": [True, False, True, False]}
+                                                  ]),
+                                        dict(label="Yes",
+                                             method="update",
+                                             args=[{"visible": [False, True, False, True]}
+                                                   ]),
+                                                ]),
+                                            )
+                                        ],
+                           font=dict(size=10))
+    fig_rank.show(config= dict(
+                displayModeBar = False))
+    fig_rank.write_html("Images/sat_rank_separated.html",config = {'displayModeBar': False})

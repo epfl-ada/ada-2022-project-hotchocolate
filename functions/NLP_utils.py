@@ -196,3 +196,117 @@ def summary_analysis(dataset):
         dates = pd.concat([dates, date])
     print("Done")
     return counts, dates
+
+
+
+def debiasing(website,beer_df,unique_user):
+    """corrects for the bias of a given dataset. The correction heuristic is inspired from https://krisjensen.github.io/files/bias_blog.pdf/.
+    Correction is implemented with clipping (such that all ratings are between 0 and 5) and attenuation (such that users with only 1 rating are not corrected and that the correction increases with number of ratings)
+    
+    Parameters
+    ----------                                  
+    website         (string)  :  name of the website/dataset considered. Either "RateBeer" or "BeerAdvocate"
+    beer_df         (pandas.DataFrame) : dataframe with beer ratings that will be corrected
+    unique_user     (pandas.DataFrame) : dataframe of beer reviewers (without duplicates) used as a basis to determine systematic reviewer bias 
+    
+    Returns
+    -------
+    None
+    
+    """
+    
+    def attenuating(row,max_rating):
+        """attenuates the bias correction of a specific user. 
+        Attenuation is an affine function of the number of ratings of a given user.
+        
+        Parameters
+        -----------
+        row: row of the given dataframe
+        max_rating: maximum rating found in the dataframe
+        
+        Returns
+        -----------
+        attenuation coefficient 
+        """
+        if row.nbr_ratings==1:
+            attenuation_coeff=0 #We cancel the bias if the user only rated once.
+        if row.nbr_ratings==max_rating:
+            attenuation_coeff=1 #If the user has the rated the most, we do not attenuate their bias.
+        else:
+            attenuation_coeff=1/(max_rating-1)*row.nbr_ratings-1/(max_rating-1) #for the other users, the bias is attenuated with a coefficient between 0 and 1 affine function of the number of ratings
+        return attenuation_coeff
+    
+    def clip (dataframe):
+        """clips a debiased rating such that all ratings are in [0,5] range
+        Parameters
+        ----------
+        dataframe: dataframe on which the ratings will be debiased
+        
+        Returns
+        ----------
+        debiased_rating: debiased rating in [0,5] range
+        """
+        debiased_rating=dataframe['rating']-dataframe['bias'] #We compute the debiased rating as the bias of the user substracted to the initial rating of the user
+        if debiased_rating<0: 
+            debiased_rating=0 #if the new rating is inferior to 0, we clip it to 0
+        if debiased_rating>5: 
+            debiased_rating=5 #if the new rating is superior to 5, we clip it to 5
+        return debiased_rating
+    
+    # We define local variables depending on the website
+    if website == "RateBeer":
+        acronym = "RB"
+        NUM_CSV = 15
+        average_rating = beer_df.avg.mean()
+    if website == "BeerAdvocate":
+        acronym = "BA"
+        NUM_CSV = 17
+        average_rating = beer_df.avg.mean()
+    #We iterate over the ratings dataset and group ratings by user.
+    grouped_by_users = pd.DataFrame([])
+    for i in range(1,NUM_CSV):
+        temp = pd.read_csv(f'DATA/{website}_ratings_part_{i}.csv')
+        df_partial_grouped_by_users_ratings=temp.groupby(["user_id"]).rating.sum().to_frame()#We group the ratings by users and return the sum of the ratings of each user 
+        grouped_by_users = pd.concat([grouped_by_users,df_partial_grouped_by_users_ratings]).groupby(["user_id"]).sum()# We compile the results from  all our csvs    
+        del temp
+        
+        
+    grouped_by_users = grouped_by_users.reset_index()
+    user_to_nbr_ratings=dict(zip(unique_user.user_id,unique_user.nbr_ratings)) #create a dictionary which keys are user_ids and values are the number of ratings of said users
+    grouped_by_users["nbr_ratings"]=grouped_by_users.user_id.map(user_to_nbr_ratings) #we map the number of ratings to the corresponding user_ids
+    #We calculate the attenuation coefficient and bias of each user
+    maximum_rating=max(grouped_by_users["nbr_ratings"])
+    grouped_by_users["attenuation coeff"]=grouped_by_users.apply(lambda row: attenuating(row,maximum_rating),axis=1)
+    #Since we computed the sum of ratings of each users when we iterated over the csvs, we need to divide this value by the number of ratings of the user to get the average. The bias is the average rating of the user - average rating of all beers
+    grouped_by_users["bias"]=(grouped_by_users["rating"]/grouped_by_users["nbr_ratings"]-average_rating)*grouped_by_users["attenuation coeff"] #this bias must be multiplied by the attenuation coefficient
+    #We apply the correction to each rating of the dataframe and clip the rating so its always between [0,5]
+    user_to_bias=dict(zip(grouped_by_users.user_id,grouped_by_users.bias)) #We create a dictionary which keys are the user ids and and values are the user biases
+    grouped_by_beer = pd.DataFrame([])
+    for i in range(0,NUM_CSV): #We iterate over all the csvs
+        temp = pd.read_csv(f'DATA/{website}_ratings_part_{i}.csv')
+        temp["bias"]=temp.user_id.map(user_to_bias) #we map the bias to its user
+        temp["debiased_rating"]=temp["rating"]-temp["bias"] #We substract the bias from the initial rating to get the debiased rating
+        temp["debiased_rating"]=temp.apply(clip,axis=1) #Clipping of the new rating
+        #Needed to save work, only need to be done once
+        #temp.to_csv(f"DATA/{website}_ratings_part_{i}_corrected_w_attenuation.csv")
+        partial_grouped_by_beer = temp.groupby(["beer_id"]).debiased_rating.sum().to_frame() #We group the debiased ratings by beer ids and return the sum of ratings for each beers
+        grouped_by_beer = pd.concat([grouped_by_beer,partial_grouped_by_beer]).groupby(["beer_id"]).sum() #We compile the results from each csv
+
+
+    grouped_by_beer=grouped_by_beer.reset_index()
+    beer_to_debiased_rating=dict(zip(grouped_by_beer.beer_id,grouped_by_beer.debiased_rating)) #we create a dictionary which keys are the beer ids and values are the sums of debiased ratings
+    beer_to_nbr_ratings=dict(zip(beer_df.beer_id,beer_df.nbr_ratings)) #we create a dictionary which keys are the beer ids and the keys are the number of ratings for those beers
+    #We compute the debiased average of all beers as the sum of debiased ratings divided by the number of ratings
+    beer_df["debiased_avg"]=beer_df.beer_id.map(beer_to_debiased_rating)/beer_df.beer_id.map(beer_to_nbr_ratings) 
+    beer_df.to_csv(f"DATA/{website}_beers_corrected_avg.csv",index=False)
+
+
+Anglo_American_Ales=['Altbier', 'Barley Wine',"Bitter",'Premium Bitter/ESB',"Golden Ale/Blond Ale","Brown Ale", "California Common","Cream Ale","Black IPA","India Pale Ale (IPA)","Imperial IPA","Session IPA","Kölsch","American Pale Ale","Irish Ale","English Strong Ale", "American Strong Ale","Mild Ale","Amber Ale","English Pale Ale","Traditional ALe","Scotch Ale","Old Ale","Scottish Ale"]
+Beligan_Style_Ales=["Belgian Ale","Belgian Strong Ale","Bière de Garde","Abbey Dubbel",'Abt/Quadrupel',"Saison","Abbey Tripel"]
+Lagers=["Pale Lager","Premium Lager","Imperial Pils/Strong Pale Lager","India Style Lager","Amber Lager/Vienna",'Czech Pilsner (Světlý)',"Pilsener","Heller Bock","Doppelbock","Dumbler Bock","Weizen Bock","Esibock","Malt Liquor","Oktoberfest/Märzen","Radler/Shandy","Zwickel/Keller/Landbier","Dortmunder/Helles",'Dunkel/Tmavý','Schwarzbier','Polotmavý']
+Stout_and_Porter=["Stout","Imperial Stout","Foreign Stout","Sweet Stout","Dry Stout","Porter","Baltic Porter","Imperial Porter"]
+Wheat_beer=["Wheat Ale","Witbier",'German Hefeweizen','Dunkelweizen','German Kristallweizen']
+Sour_beer=["Berliner Weisse","Sour/Wild Ale","Sour Red/Brown",'Grodziskie/Gose/Lichtenhainer','Lambic Style - Gueuze', 'Lambic Style - Unblended','Lambic Style - Faro','Lambic Style - Fruit',"Grodziskie/Gose/Lichtenhainer"]
+Other_styles=["Spice/Herb/Vegetable","Smoked",'Fruit Beer',"Sahti/Gotlandsdricke/Koduõlu",'Low Alcohol','Specialty Grain']
+Cider_Mead_Saké=['Cider','Mead','Saké - Daiginjo', 'Saké - Namasaké','Saké - Ginjo', 'Saké - Infused', 'Saké - Tokubetsu','Saké - Junmai', 'Saké - Nigori', 'Saké - Koshu', 'Saké - Taru','Saké - Honjozo', 'Saké - Genshu', 'Saké - Futsu-shu','Perry']
+beer_style_dict={key: "Anglo American Ales" for key in Anglo_American_Ales}|{key: "Belgian Style Ales" for key in Beligan_Style_Ales}|{key:"Lagers" for key in Lagers}|{key:"Stout and Porter" for key in Stout_and_Porter}|{key:"Wheat beer" for key in Wheat_beer}|{key:"Sour beer" for key in Sour_beer}|{key:"Other styles" for key in Other_styles}|{key:"Cider, Mead and Saké" for key in Cider_Mead_Saké}

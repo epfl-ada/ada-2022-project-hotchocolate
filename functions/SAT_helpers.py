@@ -247,3 +247,4 @@ def save_and_display_sat_ratings(website,predictions,matching_results,beers_to_p
     SAT_results.to_csv(f"data/predicted_SAT_{acronym}_sorted.csv",index=True)
     display(SAT_results[["nom","type","brasseur","avg"]])
 
+    return SAT_results
