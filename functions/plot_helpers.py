@@ -157,8 +157,8 @@ def generate_map(filename, map_name, usa= False,
                             <br><b>Brewery</b>: %{customdata[1]}
                             <br><b>Mean Rating</b>: %{customdata[2]:.2f}
                             <br><b>Type</b>: %{customdata[3]}
-                            <br><b>Positive words in reviews</b>: %{customdata[4]}
-                            <br><b>Positive words in reviews</b>: %{customdata[5]}<br><extra></extra>"""
+                            <br><b>Mean Positive words across all beer's reviews</b>: %{customdata[4]}
+                            <br><b>Mean Negative words across all beer's reviews</b>: %{customdata[5]}<br><extra></extra>"""
     ))
 
     fig_world.update_layout(
@@ -209,8 +209,8 @@ def generate_map(filename, map_name, usa= False,
                             <br><b>Brewery</b>: %{customdata[1]}
                             <br><b>Mean Rating</b>: %{customdata[2]:.2f}
                             <br><b>Type</b>: %{customdata[3]}
-                            <br><b>Positive words in reviews</b>: %{customdata[4]}
-                            <br><b>Positive words in reviews</b>: %{customdata[5]}<br><extra></extra>"""
+                            <br><b>Mean Positive words across all beer's reviews</b>: %{customdata[4]}
+                            <br><b>Mean Negative words across all beer's reviews</b>: %{customdata[5]}<br><extra></extra>"""
     
 
     
