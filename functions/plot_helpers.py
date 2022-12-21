@@ -489,33 +489,34 @@ def retrieve_style_list(website):
     style_list = list(style_set)
     style_list.sort()
     return style_list
-def plot_wordcloud_dropdown(website):
+def plot_wordcloud_dropdown():
     """
-    Plots wordclouds corresponding to beer reviews for all beer styles in a given 'website'. Style can be chosen with a dropdown menu
+    Plots wordclouds corresponding to beer reviews for all beer styles in RateBeer and BeerAdvocate. Style can be chosen with a dropdown menu
     """
-    if website == "RateBeer":
-        acronym = "RB"
-    if website == "BeerAdvocate":
-        acronym = "BA"  
-    # Load img
+
+    # Load images
     img_list = os.listdir("Images/word_clouds")
-    # Initialize figure
+    # Initialize figures
     fig = go.Figure(layout=go.Layout(width=500, height=500,
-                                    xaxis=dict(range=[140, 430],
-                                            fixedrange = True),
-                                    yaxis=dict(range=[400, 50],
-                                            fixedrange = True
+                                    xaxis=dict(range=[280, 680],
+                                            fixedrange = False),
+                                    yaxis=dict(range=[620, 100],
+                                            fixedrange = False
                                     ),
                                     ))
-    # image dimensions (pixels)
-    # Generate an image starting from a numerical function
-    # Add Traces
-    style_list = retrieve_style_list(website)
+    #List all styles that will be shown
+    style_list_BA = retrieve_style_list("BeerAdvocate")
+    style_list_RB = retrieve_style_list("RateBeer")
+    style_list = style_list_BA + style_list_RB
+    description = ["BeerAdvocate style : " + style for style in style_list_BA] + ["RateBeer style : "+ style for style in style_list]
+    #Create all renderings in the plot
     for i,style in enumerate(style_list):
         if "/" in style:
             style = style.replace("/","")
-        
-        pil_img = Image.open(f'Images/word_clouds/{acronym}_{style}_wordcloud.png') # PIL image object
+        if i < len(style_list_BA):
+            pil_img = Image.open(f'Images/word_clouds/BA_{style}_wordcloud.png') # PIL image object
+        else:
+            pil_img = Image.open(f'Images/word_clouds/RB_{style}_wordcloud.png') # PIL image object
         prefix = "data:image/png;base64,"
         with BytesIO() as stream:
             pil_img.save(stream, format="png")
@@ -524,36 +525,38 @@ def plot_wordcloud_dropdown(website):
             goImg = go.Image(source=base64_string,
                             x0=0, 
                             y0=0,
-                            dx=0.5,
-                            dy=0.5,
+                            dx=1,
+                            dy=1,
                             visible = True,)
         else:
             goImg = go.Image(source=base64_string,
                         x0=0, 
                         y0=0,
-                        dx=0.5,
-                        dy=0.5,
+                        dx=1,
+                        dy=1,
                         visible = False,)
         fig.add_trace(goImg)
         fig.update_traces(
                     hovertemplate = None,
                     hoverinfo = "skip")
+    #Create masks to activate only one rendering at a time
     mask_list = []
-    mask = np.arange(0,len(img_list))
-    for i in range(len(img_list)):
+    mask = np.arange(0,len(style_list))
+    for i in range(len(style_list)):
         mask_list.append(list(mask==i))
-    buttons = [{'label': style, 'method':'update','args':[{"visible":mask_list[i]}]} for i,style in enumerate(style_list)]
+    buttons = [{'label': description[i], 'method':'update','args':[{"visible":mask_list[i]}]} for i,style in enumerate(style_list)]
+    # Add Annotations and Buttons
+
     fig.update_layout(template="simple_white",
                 updatemenus=[dict(
                 active=1,
-                x=0.8,
+                x=1.05,
                 y=1.1,
                 buttons=buttons,
             )
         ])
-    # Add Annotations and Buttons
     fig.update_xaxes(visible=False)
     fig.update_yaxes(visible=False)
-    # Set title
     fig.show()
-    fig.write_html(f"Images/{acronym}_wordclouds.html",config = {'displayModeBar': False})
+    #Export for site
+    fig.write_html(f"Images/test_wordclouds.html",config = {'displayModeBar': False})
