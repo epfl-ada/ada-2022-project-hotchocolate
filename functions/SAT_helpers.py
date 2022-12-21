@@ -5,6 +5,8 @@ import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
+
+
 RB_style_dict = {
             "IPA" : 'India Pale Ale (IPA)',
             "Blanche" : "Belgian Ale",
@@ -55,13 +57,13 @@ BA_countries_dict = {
         "France" : "France",
         "Belgique" : "Belgium"}
 
-def generate_automatic_beer_matches(website):
+def generate_automatic_beer_matches(website,matched_dataset):
     """Generates a dataframe with the items/beers of a given 'website' dataset that have more than 0.8 cosine similarity with SAT beers.
     
     Parameters
     ----------
     website         (string)     :  Name of the dataset. Either 'RateBeer' or 'BeerAdvocate'.
-
+    matched_dataset (dataframe)  :  Dataframe with all matches between SAT beers and dataset
     Returns
     -------
     (dataframe) : dataframe of all SAT beers that found a reasonable match in the 'website' dataframe
@@ -73,7 +75,7 @@ def generate_automatic_beer_matches(website):
     if website == "BeerAdvocate":
         acronym = "BA"
     SAT_beers = read_data.fetch_satellite_df()
-    SAT_match_candidates = pd.read_csv("DATA/matched_SATbeers.csv")
+    SAT_match_candidates = matched_dataset
     beers = pd.read_csv(f"DATA/{website}_beers_corrected_avg.csv")
     beers =  beers[beers["nbr_ratings"] != 0].copy()
     mask = ((SAT_match_candidates["alcool"] == SAT_match_candidates[f"{acronym}_abv"]) & (SAT_match_candidates[f"{acronym}_similarity"] > 0.8))
@@ -83,6 +85,7 @@ def generate_automatic_beer_matches(website):
     not_matched =  SAT_beers[~SAT_beers["nom"].isin(automatic_matches["nom"].unique())]
     top5_for_manual_matching = SAT_match_candidates[~SAT_match_candidates["nom"].isin(automatic_matches["nom"].unique())]
     return automatic_matches,not_matched, top5_for_manual_matching
+
 
 
 def prepare_features(website,matched_dataset):
@@ -166,11 +169,7 @@ def prepare_features(website,matched_dataset):
     beers_to_predict["type"] = beers_to_predict["type"].apply(lambda x : style_dict[x])
     beers_to_predict["from"] = beers_to_predict["from"].apply(lambda x : countries_dict[x])
     beers = pd.read_csv(f"DATA/{website}_beers_corrected_avg.csv")
-    brewery = read_data.fetch_csv("DATA/RateBeer.tar",'breweries')
-    beers_with_location = pd.merge(beers, brewery, left_on=  ['brewery_id'],
-                   right_on= ['id'], 
-                   how = 'left')
-    features_for_traning = beers_with_location[["abv","location","style","avg"]]
+    features_for_traning = beers[["abv","location","style","avg"]]
     features_for_traning.dropna(subset="avg",axis='index',inplace=True)
     features_for_traning.fillna(0,inplace=True)
     SAT_features = beers_to_predict[["alcool","from","type"]]
@@ -179,6 +178,7 @@ def prepare_features(website,matched_dataset):
     sat_beers_to_rate_with_dummies =pd.get_dummies(sat_beers_to_rate,columns=["style","location"])
     features = pd.get_dummies(features_for_traning,columns=["style","location"])
     return sat_beers_to_rate_with_dummies.tail(len(beers_to_predict)), features,beers_to_predict, features_for_traning
+
 
 def randomforest_sat_beers_ratings(features_to_train,features_to_estimate):
     """ Trains a RandomForestRegressor with 'features_to_train' in order to estimate ratings of beers corresponding to 'features_to_estimate'
@@ -247,71 +247,3 @@ def save_and_display_sat_ratings(website,predictions,matching_results,beers_to_p
     SAT_results.to_csv(f"data/predicted_SAT_{acronym}_sorted.csv",index=True)
     display(SAT_results[["nom","type","brasseur","avg"]])
 
-def plot_wordcloud_dropdown(website):
-    """
-    Plots wordclouds corresponding to beer reviews for all beer styles in a given 'website'. Style can be chosen with a dropdown menu
-    """
-    if website == "RateBeer":
-        acronym = "RB"
-    if website == "BeerAdvocate":
-        acronym = "BA"  
-    # Load img
-    img_list = os.listdir("Images/word_clouds")
-    # Initialize figure
-    fig = go.Figure(layout=go.Layout(width=500, height=500,
-                                     xaxis=dict(range=[140, 430],
-                                               fixedrange = True),
-                                    yaxis=dict(range=[400, 50],
-                                               fixedrange = True
-                                    ),
-                                    ))
-    # image dimensions (pixels)
-    # Generate an image starting from a numerical function
-    # Add Traces
-    style_list = retrieve_style_list(website)
-    for i,style in enumerate(style_list):
-        if "/" in style:
-            style = style.replace("/","")
-        
-        pil_img = Image.open(f'Images/word_clouds/{acronym}_{style}_wordcloud.png') # PIL image object
-        prefix = "data:image/png;base64,"
-        with BytesIO() as stream:
-            pil_img.save(stream, format="png")
-            base64_string = prefix + base64.b64encode(stream.getvalue()).decode("utf-8")
-        if i == 0:
-            goImg = go.Image(source=base64_string,
-                             x0=0, 
-                             y0=0,
-                             dx=0.5,
-                             dy=0.5,
-                            visible = True,)
-        else:
-            goImg = go.Image(source=base64_string,
-                         x0=0, 
-                         y0=0,
-                         dx=0.5,
-                         dy=0.5,
-                        visible = False,)
-        fig.add_trace(goImg)
-        fig.update_traces(
-                      hovertemplate = None,
-                      hoverinfo = "skip")
-    mask_list = []
-    mask = np.arange(0,len(img_list))
-    for i in range(len(img_list)):
-        mask_list.append(list(mask==i))
-    buttons = [{'label': style, 'method':'update','args':[{"visible":mask_list[i]}]} for i,style in enumerate(style_list)]
-    fig.update_layout(template="simple_white",
-                updatemenus=[dict(
-                active=1,
-                x=0.8,
-                y=1.1,
-                buttons=buttons,
-            )
-        ])
-    # Add Annotations and Buttons
-    fig.update_xaxes(visible=False)
-    fig.update_yaxes(visible=False)
-    # Set title
-    fig.show()
-    fig.write_html(f"Images/{acronym}_wordclouds.html",config = {'displayModeBar': False})

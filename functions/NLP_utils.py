@@ -83,7 +83,6 @@ def tokenize_dataframe(dataframe):
     documents = {}
     for index, beer in dataframe.iterrows():
         documents[beer["beer_id"]] = (tokenize(beer["beer_name"]) + " " + tokenize(beer['brewery_name']) + " " + tokenize(str(beer["abv"])))
-    print("Documents tokenized")
     return documents
 
 def search_vec(query, features, threshold=0.1):
@@ -164,7 +163,7 @@ def summary_analysis(dataset):
     -------
     (series) series of wordcounts for each rating
     (series) series of correctly encoded datetime.Datetimes for the dates of creationof reviews
-    '''
+    
     """
     first = pd.read_csv(f"data/{dataset}_ratings_part_0.csv",low_memory=False)
     
