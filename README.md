@@ -41,7 +41,9 @@ First of all, the proportion of NaN values in each column of each dataset was an
 
 ### SAT Dataset processing
 
-We used Vector Space Retrieval based on ```sklearn``` feature extraction module in order to identify SAT beers in the proposed datasets. To this end, we constructed tokenized queries and beer entries based on beer name, brewery name and alcohol content and used cosine distance as a measure of similarity. After a first analysis of our results, matches with cosine similarity smaller than 0.7 were considered not relevant and we kept the best result for each dataset. We checked manually the beers without a match under our similarity threshold and accepeted the low similarity matches that wwere due to negligable variations.
+We used Vector Space Retrieval based on ```sklearn``` feature extraction module in order to identify SAT beers in the proposed datasets. To this end, we constructed tokenized queries and beer entries based on beer name, brewery name and alcohol content and used cosine distance as a measure of similarity. After a first analysis of our results, matches with cosine similarity smaller than 0.8 were considered not relevant and we kept the best result for each dataset. We checked manually the beers without a match under our similarity threshold and accepeted the low similarity matches that were due to negligable variations.
+
+Beers that were not matched in the dataset were considered to not be rated by any user. We estimate the rating for these beers by implementing a Random Forest Regressor, which learns beer ratings based on features constructed from Alcohol content (ABV), Beer style and Country of origin of the brewery f each beer.
 
 ### Exploratory data analysis and first summary statistics
 
@@ -59,9 +61,16 @@ b_i &= \frac{1}{n_{r,i}} \sum_{\text{All user i ratings}}r_i - \frac{1}{N}\sum_{
 
 Where $r_{ij}$ is the rating of user i to to j, $n_{r,i}$ is the number of ratings given by user $i$, $b_i$ is the estimated bias of user $i$ $\alpha_i$ is an attenuation coefficient specific to user $i$ and based on $n_{r,i}$, $N$ is the total number of ratings in the dataset. 
 
-### Textual and rating analysis
+### Textual analysis of proeminent beers
 
-A first exploration of the textual reviews and ratings has been performed by computing summary statistics and histograms of word counts per review and date of creation per rating/review. We then used a ```fasttext``` pretrained model in order to identify the most common languages in the reviews of both BeerAdvocate and RateBeer. A decision was taken to only consider ratings in our first analysis, since the heterogeneity of textual reviews, (in terms of size, content and language) make their study non trivial. 
+With the objective of comparing textual reviews of SAT beers appearing in the datasets and with the most proeminent drinks of each dataset, we query the datasets for the most reviewed and favourite beers of users of each country and retrieve reviews that coincide with high ratings (maximum overall rating). We map all reviews to textual embeddings (word vectors) by using OpenAI's Embedding API and ADA-02 model. This choice coomes from the realization that embeddings generated from foundation models are often robust to multilanguage datasets and provide the possibility of comparing our results with other texual corpi, if needed. 
+
+t-SNE representations of these embeddings are produced and we discuss the clusters that were invariant to multiple selections of t-SNE perplexity.
+
+### Happiness 
+
+### Clustering and Ranking
+
 
 ## Contributions of HotChocolate members :
 
