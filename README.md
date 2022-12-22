@@ -51,70 +51,21 @@ Histogram plots of the number of ratings received by beers and number of ratings
 ### Standardization and bias correction
 
 
-To correct the bias, we propose to compute the median rating  for each beer. For each beer an user will have rated, we will also compute the difference between their rating and the median rating of the beer. We will then average these differences.
+To correct the bias, we propose to apply a correction of systematic reviewer bias, insipired by [this paper](https://krisjensen.github.io/files/bias_blog.pdf). We use a 'mean-field' approach where we correct ratings as such: 
 
-$$\text{UserCorrection} = \frac{\displaystyle\sum_{UserRatings}{\frac{BeerScore_{median} - BeerScore_{user}}{\sigma_{BeerScore}}}}{N_{UserRatings}}$$
+$$ \begin{aligned}r^{\star}_{ij}&= r_{ij} - \alpha_i b_i \\
+b_i &= \frac{1}{n_{r,i}} \sum_{\text{All user i ratings}}r_i - \frac{1}{N}\sum_{\text{All ratings}}r 
+\end{aligned}$$
 
-This correction will be added to all the user's ratings. Moreover, when we compute averages, more weight will be given to users which number of reviews go over a certain threshold. 
+Where $r_{ij}$ is the rating of user i to to j, $n_{r,i}$ is the number of ratings given by user $i$, $b_i$ is the estimated bias of user $i$ $\alpha_i$ is an attenuation coefficient specific to user $i$ and based on $n_{r,i}$, $N$ is the total number of ratings in the dataset. 
 
 ### Textual and rating analysis
 
 A first exploration of the textual reviews and ratings has been performed by computing summary statistics and histograms of word counts per review and date of creation per rating/review. We then used a ```fasttext``` pretrained model in order to identify the most common languages in the reviews of both BeerAdvocate and RateBeer. A decision was taken to only consider ratings in our first analysis, since the heterogeneity of textual reviews, (in terms of size, content and language) make their study non trivial. 
 
-## Proposed timeline
+## Contributions of HotChocolate members :
 
-### Week 47 (21/11-25/11)
-Homework 2
-### Week 48 (28/11-2/12)
-Homework 2
-
-First implementation of the website (1 week, João)
-
-Design a simple regression model to predict beer rating (1 week, 1 person)
-### Week 49 (5/12-9/12)
-
-
-Finish interactive map chart. (1 week, Gabriel)
-
-Bias correction for data analysis (3 days, Auriane)
-
-Statistical analysis (4 day, everyone)
-
-
-### Week 50 (12/12-16/12)
-
-Write down our conclusions (only once two last steps are validated) (4 days, 2 persons) 
-
-Finish all plots (4 days, 1 person)
-
-Correct text (1 day, everyone)
-
-Design (3 days, Auriane)
-
-### Week 51 (19/12-23/12)
-Safety net week - We hope to be finished before 19/12 and to use this week only in case of an emergency
-
-__Landmark__ : A brewtiful data analysis is live !
-
-## Organization within the team:
-
-### Set-up
-
-- Notebook.
-- data (folder that won't contain the data on git)
-  - data's files (Dataset files that will only be present locally)
-- functions (folder)
-  - functions' files
-- Plots (folder)
-  - plots' files
-- todo_ideas
-  
-## Questions we have for TAs
-
-Should we give more weight to the ratings of users who have written a number of reviews going over a certain threshold?
-
-### Notes for group
-Install in developer mode with `pip install -e .` from a terminal in the project's main folder.
-
-Here is the Google DRive link to download the data 
-https://drive.google.com/drive/folders/1Wz6D2FM25ydFw_-41I9uTwG9uNsN4TCF
+- Auriane :
+- Gabriel :
+- João : SAT beer pipeline (scrapping, matching data between datasets, visualization, data story)
+- Xavier :
