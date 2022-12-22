@@ -83,7 +83,7 @@ def generate_map(filename, map_name, usa= False,
                  source_file_path = 'map/file_for_map/', 
                  html_file_path = 'map/html/'):
 
-    ''' Author: Gabriel Benato @HOTCHOCOLATE, ADA2022
+    '''
     This function generate an interactive map of the world (and USA)
     with the average score of beer per countries and their favored beer's style. 
     Is is assumed it will be used in a file at the root of the project. 
@@ -175,11 +175,10 @@ def generate_map(filename, map_name, usa= False,
         
     #Activate if we want USA map
     if usa:
-        united_states = data[mask]
+        united_states = data[mask].reset_index()
         for k, state in enumerate(united_states['location']):
             #Only keep the states 
             united_states['location'][k] = state.split('States, ',1)[1]
-            
         #switch state by their abbreviation to fit 
         #the locationmode 'USA-states' of the plotly library
         united_states.location = united_states.location.map(STATES)
@@ -189,7 +188,6 @@ def generate_map(filename, map_name, usa= False,
                                  united_states["style"],
                                  united_states["pos_words"],
                                  united_states["neg_words"]), axis=-1)
-        
         #plot the usa map
         fig_usa = go.Figure(data = go.Choropleth(
             locations = united_states['location'], #abbreviation are used to place data on the USA map
@@ -229,7 +227,6 @@ def generate_map(filename, map_name, usa= False,
         if html :
             fig_usa.write_html(html_file_path + map_name +"_usa.html")
     return
-
 def combine_neg_pos_and_favoured_beer(neg_pos_filename, favoured_filename, combined_filename, 
                                        source_file_path = 'map/file_for_map/'):
     ''' 
