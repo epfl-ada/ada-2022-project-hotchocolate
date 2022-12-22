@@ -254,13 +254,21 @@ def combine_neg_pos_and_favoured_beer(neg_pos_filename, favoured_filename, combi
     merged_data.to_csv(source_file_path + combined_filename)
     return
 
-#All functions used in this notebook
 def find_high_rating_review(df):
     """ To be used as an aggregation function of GroupBy object (e.g.  pandas.DataFrame.groupby(...).agg(find_high_rating_review))
     Filters the input dataframe by selecting rows with reviews that verify:
     1. Max rating was given
     2. The overall rating (sum of taste, aroma, ...) is not 5 points less than the maximum value
     3. The review is not empty (has at least 2 characters)
+
+    Arguments
+    ------
+    df (pandas.DataFrame) : dataframe in which reviews will be searched
+    
+    Returns
+    ------
+    (pandas.DataFrame)         : reduced dataframe with only high rating reviews
+
     """
     max_rating = df["rating"].max()
     max_overall = df["overall"].max()
@@ -313,7 +321,18 @@ def retrieve_reviews_SAT(website):
 def add_country_column(target_df,country_csv_path,california_as_usa=True):
     """
     Given a dataset of beer reviews 'target_df', augments the dataset with the location of the reviewer from an accessory dataset located in 'country_csv_path'
+    
+    Arguments
+    ------
+    target_df           (pandas.DataFrame): dataframe in which the country column will be added
+    country_csv_path    (string)          : path to file in which csv with country data is located
+    california_as_usa   (boolean)         : if True, we drop all information about individual USA states and keep only California, which is the most populated one as of 2022
+    Returns
+    ------
+    (pandas.DataFrame) DataFrame with country column added
+
     """
+    
     #Recover the dataframe of favourite beer for users of each country. 
     #Drop countries for which there were no enough reviewers (tagged as favourite beer_id = -1)
     countries = pd.read_csv(country_csv_path)
@@ -373,6 +392,18 @@ def plot_tsne(SAT_embeddings,dataset_embeddings,sat_df,dataset_df,perplexity=10,
     Given arrays of embeddings corresponding to reviews of SAT and of the preferred beers of each country for a given dataset,
     plot a t-SNE graph where embeddings corresponding to SAT beers are rendered as beer images and where favourite beers are rendered as the flag of the country that prefers them.
     The plot can be customized for perplexity and marker size.
+
+    Arguments
+    --------
+    SAT_embeddings      (numpy.array)      : (len(sat_df),1916) array corresponding to OpenAI   
+    dataset_embeddings  (numpy.array)      : (len(dataset_df),1916) array corresponding to OpenAI   
+    sat_df              (pandas.DataFrame) : dataset from which the reviews corresponding to SAT beers were taken (for rendering data on hover)
+    dataset_df          (pandas.DataFrame) : dataset from which the reviews corresponding to countries were taken (for rendering data on hover)
+    perplexity          (int)    : hyperparameter of t-SNE plots
+    country_size        (int)    : size of country flag images in plot (in pts)
+    beer_size           (int)    : size of beer figures images in plot (in pts)
+    acronym             (string) : Prefix used for saving the plot
+    title               (string) : Title of the plot
     """
     #Beers sold on SAT should be shown with their image, while embeddings representing favoured beers for each
     #country should be shown with the country flag.
@@ -400,7 +431,7 @@ def plot_tsne(SAT_embeddings,dataset_embeddings,sat_df,dataset_df,perplexity=10,
         y="y",
         hover_name="general_id",
         hover_data=["beer"],
-        labels=dict(x="t-SNE  first axis", y="t-SNE second axis")
+        labels=dict(x="t-SNE  first dimension", y="t-SNE second dimension")
 
     )
     fig.update_traces(marker_color="rgba(0,0,0,0)",mode='markers',
@@ -492,6 +523,15 @@ def retrieve_style_list(website):
 def plot_wordcloud_dropdown():
     """
     Plots wordclouds corresponding to beer reviews for all beer styles in RateBeer and BeerAdvocate. Style can be chosen with a dropdown menu
+    
+    Arguments
+    -------
+    (None)
+
+    Returns
+    ------
+    (None) but saves figure in a separate file
+    
     """
 
     # Load images
@@ -563,83 +603,21 @@ def plot_wordcloud_dropdown():
 
 
 
-def plot_wordcloud_dropdown2():
-    """
-    Plots wordclouds corresponding to beer reviews for all beer styles in RateBeer and BeerAdvocate. Style can be chosen with a dropdown menu
-    """
-
-    # Load images
-    img_list = os.listdir("Images/word_clouds")
-    # Initialize figures
-    fig = go.Figure(layout=go.Layout(width=500, height=500,
-                                    xaxis=dict(range=[280, 680],
-                                            fixedrange = False),
-                                    yaxis=dict(range=[620, 100],
-                                            fixedrange = False
-                                    ),
-                                    ))
-    #List all styles that will be shown
-    style_list_BA = retrieve_style_list("BeerAdvocate")
-    style_list_RB = retrieve_style_list("RateBeer")
-    style_list = style_list_BA + style_list_RB
-    description = ["BeerAdvocate style : " + style for style in style_list_BA] + ["RateBeer style : "+ style for style in style_list]
-    #Create all renderings in the plot
-    for i,style in enumerate(style_list):
-        if "/" in style:
-            style = style.replace("/","")
-        if i < len(style_list_BA):
-            pil_img = Image.open(f'Images/word_clouds/slate_BA_{style}_wordcloud.png') # PIL image object
-        else:
-            pil_img = Image.open(f'Images/word_clouds/slate_RB_{style}_wordcloud.png') # PIL image object
-        prefix = "data:image/png;base64,"
-        with BytesIO() as stream:
-            pil_img.save(stream, format="png")
-            base64_string = prefix + base64.b64encode(stream.getvalue()).decode("utf-8")
-        if i == 0:
-            goImg = go.Image(source=base64_string,
-                            x0=0, 
-                            y0=0,
-                            dx=1,
-                            dy=1,
-                            visible = True,)
-        else:
-            goImg = go.Image(source=base64_string,
-                        x0=0, 
-                        y0=0,
-                        dx=1,
-                        dy=1,
-                        visible = False,)
-        fig.add_trace(goImg)
-        fig.update_traces(
-                    hovertemplate = None,
-                    hoverinfo = "skip")
-    #Create masks to activate only one rendering at a time
-    mask_list = []
-    mask = np.arange(0,len(style_list))
-    for i in range(len(style_list)):
-        mask_list.append(list(mask==i))
-    buttons = [{'label': description[i], 'method':'update','args':[{"visible":mask_list[i]}]} for i,style in enumerate(style_list)]
-    # Add Annotations and Buttons
-
-    fig.update_layout(template="simple_white",
-                updatemenus=[dict(
-                active=1,
-                x=1.05,
-                y=1.1,
-                buttons=buttons,
-            )
-        ])
-    fig.update_xaxes(visible=False)
-    fig.update_yaxes(visible=False)
-    fig.show()
-    #Export for site
-    fig.write_html(f"Images/test_wordclouds.html",config = {'displayModeBar': False})
 
 
 def create_rank_plot(BA_sorted,RB_sorted):
-    """Creates plots of rankings (with option for normalized rankings) for BeerAdvocate and RateBeer datasets"""
-
+    """Creates plots of rankings (with option for normalized rankings) for BeerAdvocate and RateBeer datasets
     
+    Arguments
+    --------
+    BA_sorted   (pandas.DataFrame) : dataframe with SAT beers with ratings estimated from/found in BeerAdvocate
+    RB_sorted   (pandas.DataFrame) : dataframe with SAT beers with ratings estimated from/found in RateBeer
+    
+    Returns
+    ----
+    (None) but save figure in a separate file
+    """
+
     
     def compute_normalized_ranking(dataframe):
         dataframe["prix"] =  dataframe.apply(lambda row: re.findall(r"\d+\.\d+",row["prix"])[-1],axis=1)
