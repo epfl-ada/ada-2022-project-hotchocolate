@@ -73,16 +73,17 @@ t-SNE representations of these embeddings are produced and we discuss the cluste
 
 ## Organization within the team:
 
- ### Set-up
+ ### Folder Structure
 
- - Notebook.
- - data (folder that won't contain the data on git)
+ - DATA (folder that won't contain the data on git)
    - data's files (Dataset files that will only be present locally)
  - functions (folder)
    - functions' files
  - Plots (folder)
    - plots' files
  - todo_ideas
+ - map
+   - files for rendering the interactive map
 
 
 ## Contributions of HotChocolate members :
