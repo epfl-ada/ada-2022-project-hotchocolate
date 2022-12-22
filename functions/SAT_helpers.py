@@ -57,13 +57,14 @@ BA_countries_dict = {
         "France" : "France",
         "Belgique" : "Belgium"}
 
-def generate_automatic_beer_matches(website,matched_dataset):
+def generate_automatic_beer_matches(website,matched_dataset,corrected_beers_df):
     """Generates a dataframe with the items/beers of a given 'website' dataset that have more than 0.8 cosine similarity with SAT beers.
     
     Parameters
     ----------
     website         (string)     :  Name of the dataset. Either 'RateBeer' or 'BeerAdvocate'.
     matched_dataset (dataframe)  :  Dataframe with all matches between SAT beers and dataset
+    corrected_beers_df (dataframe): Dataframe with bias-corrected ratings for each beer
     Returns
     -------
     (dataframe) : dataframe of all SAT beers that found a reasonable match in the 'website' dataframe
@@ -76,7 +77,7 @@ def generate_automatic_beer_matches(website,matched_dataset):
         acronym = "BA"
     SAT_beers = read_data.fetch_satellite_df()
     SAT_match_candidates = matched_dataset
-    beers = pd.read_csv(f"DATA/{website}_beers_corrected_avg.csv")
+    beers = corrected_beers_df
     beers =  beers[beers["nbr_ratings"] != 0].copy()
     mask = ((SAT_match_candidates["alcool"] == SAT_match_candidates[f"{acronym}_abv"]) & (SAT_match_candidates[f"{acronym}_similarity"] > 0.8))
     automatic_matches = SAT_match_candidates[mask][["nom",f"{acronym}_beer_name",f"{acronym}_avg",f"{acronym}_abv",f"{acronym}_similarity",f"{acronym}_brewery_name",f"{acronym}_style",f"{acronym}_beer_id"]].drop_duplicates(subset="nom", keep='first', inplace=False, ignore_index=False)
@@ -88,7 +89,7 @@ def generate_automatic_beer_matches(website,matched_dataset):
 
 
 
-def prepare_features(website,matched_dataset):
+def prepare_features(website,matched_dataset,corrected_beers_df):
     """ Constructs feature vectors for beers. 
         These features are used for training a model on rating estimation and/or to estimate ratings
         . Feature vectors consists of:
@@ -106,6 +107,9 @@ def prepare_features(website,matched_dataset):
     matched_dataset (dataframe)  : dataframe of all the beers sold on SAT that were found 
                 on the dataset corresponding with 'website'
 
+    corrected_beers_df (dataframe) :  Dataframe with bias-corrected ratings for each beer
+    
+    
     Returns
     -------
     (dataframe) : dataframe without the rating, but with abv (alcohol content) value and 
@@ -114,7 +118,6 @@ def prepare_features(website,matched_dataset):
     
     """
     if website == "RateBeer":
-        acronym = "RB"
         style_dict = {
             "IPA" : 'India Pale Ale (IPA)',
             "Blanche" : "Belgian Ale",
@@ -138,7 +141,6 @@ def prepare_features(website,matched_dataset):
             "France" : "France"
         }
     if website == "BeerAdvocate":
-        acronym = "BA"
         style_dict = {
             "IPA" : 'English India Pale Ale (IPA)',
             "Blanche" : 'Belgian IPA',
@@ -168,7 +170,7 @@ def prepare_features(website,matched_dataset):
     beers_to_predict = SAT_beers.loc[~SAT_beers["nom"].isin(matched_dataset["nom"])]
     beers_to_predict["type"] = beers_to_predict["type"].apply(lambda x : style_dict[x])
     beers_to_predict["from"] = beers_to_predict["from"].apply(lambda x : countries_dict[x])
-    beers = pd.read_csv(f"DATA/{website}_beers_corrected_avg.csv")
+    beers = corrected_beers_df
     features_for_traning = beers[["abv","location","style","avg"]]
     features_for_traning.dropna(subset="avg",axis='index',inplace=True)
     features_for_traning.fillna(0,inplace=True)
