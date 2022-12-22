@@ -69,6 +69,10 @@ t-SNE representations of these embeddings are produced and we discuss the cluste
 
 ### Happiness 
 
+The happiness analysis began by using sentiment analysis, similar to what we learned in class. However, it was found that most of the reviews had a neutral sentiment and there was not a clear negative or positive sentiment in the results for each country's review. This can be explained by the fact that the reviews were mainly descriptive.
+
+Therefore, we decided to look at the number of positive and negative words in the reviews and group them by the country of the user. To do this, we used the list of positive and negative words provided in the course for homework 1. The mean frequency of these words was calculated for the two datasets, RateBeer and AdvocateBeer. This analysis required separating the reviews into several CSV files in order to run the algorithm correctly on the Jupyter notebook without overloading the memory. This analysis has been added to the world map and gives users a new metric to compare the beer of different countries and see which beer elicits the most enthusiasm from users.
+
 ### Clustering and Ranking
 
 ## Organization within the team:
@@ -81,6 +85,7 @@ t-SNE representations of these embeddings are produced and we discuss the cluste
    - functions' files
  - Plots (folder)
    - plots' files
+ - generated (folder with csv data generated for the postif and negatifs words analysis)
  - todo_ideas
  - map
    - files for rendering the interactive map
