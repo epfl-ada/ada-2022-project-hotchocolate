@@ -71,6 +71,19 @@ t-SNE representations of these embeddings are produced and we discuss the cluste
 
 ### Clustering and Ranking
 
+## Organization within the team:
+
+ ### Set-up
+
+ - Notebook.
+ - data (folder that won't contain the data on git)
+   - data's files (Dataset files that will only be present locally)
+ - functions (folder)
+   - functions' files
+ - Plots (folder)
+   - plots' files
+ - todo_ideas
+
 
 ## Contributions of HotChocolate members :
 
