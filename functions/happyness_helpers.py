@@ -5,7 +5,157 @@
 This file pool all the helpers functions used for positives and negatives words analysis in the review
 
 """
+import pandas as pd
+import requests
+import re
 
+
+
+def loop_AdvBeer_get_pos_neg_words():
+    """
+    automatic loop throuhg all advocate beer csv to do an postive and negative words analysis
+    This function will get the mean of positifs and negatifs per countries by matching the user-id with the location
+    in the user_id dataset from Advocate Beer.
+    (disclaimer this function can take multiple hours to run, it need to run thought 12 csv of 250 000 data of reviews)
+
+    input: list of positifs and negatif words, csv files in the correct folder 'DATA/BeerAdvocate/'
+    output: csv with positif and negatifs words average per country's review
+    """
+     csv_count = 0
+
+    advBeer_root = 'DATA/BeerAdvocate/'
+    generated_root = 'generated/'
+    df_adv_users = pd.read_csv(advBeer_root + 'users.csv')
+    
+    # get list of positif and negatif words
+    positive_word_document = requests.get("https://ptrckprry.com/course/ssd/data/positive-words.txt")
+    negative_word_document = requests.get("https://ptrckprry.com/course/ssd/data/negative-words.txt")
+
+    positive_words = re.search(r'(?<=;[\r\n]{2}).*',positive_word_document.text,re.DOTALL).group(0).split()
+    negative_words = re.search(r'(?<=;[\r\n]{2}).*',negative_word_document.text,re.DOTALL).group(0).split()
+
+    #dictionary of sentiment words
+    sentiment_dict = {
+        "positive" : positive_words,
+        "negative" : negative_words
+    }
+
+
+    #loop over all sub .csv dataset (each dataset have max 250 000 rows)
+    for csv_count in range(0,11):
+        print('csv part:',csv_count)
+        df_rev_low = pd.read_csv(advBeer_root + 'BeerAdvocate_reviews_part_' + str(csv_count) +'.csv')
+        df_rev_low = df_rev_low[['beer_id', 'brewery_id', 'user_id', 'text']]
+        list_user_location_adv = df_adv_users.loc[df_adv_users['user_id'].isin(df_rev_low['user_id']),['user_id','location']]
+        print('shape:',df_rev_low.shape, 'list user location adv shape', list_user_location_adv.shape)
+
+        df_rev_low.loc[:,'location'] = df_rev_low['user_id'].apply(get_location_user, args= (list_user_location_adv,))
+
+        df_rev_low.to_csv(generated_root + 'BeerAdvocate_location_user_id_part_' + str(csv_count) +'.csv')
+
+        print('location done for part:', csv_count)
+
+        #group by country
+        country_groups = df_rev_low.groupby(by="location")
+
+        # Positive, Negatifs words analysis
+        data = []
+
+        # loop for to compute the number of pos and neg words for each country
+        for country, group in country_groups:
+            negative_words = []
+            positive_words = []
+            print('country:', country, 'size:', group.shape[0])
+
+            negative_words.append(group.apply(lambda row : indicator_words('negative',row['text'],sentiment_dict),axis=1))
+            positive_words.append(group.apply(lambda row : indicator_words('positive',row['text'],sentiment_dict),axis=1))
+
+
+            data.append([country,np.mean(negative_words),np.mean(positive_words), group.shape[0]])
+            #resultats_pos_neg_words_2 = pd.DataFrame(data, columns=["country","neg_words", "pos_words", "nb_review"])
+
+
+        resultats_pos_neg_words = pd.DataFrame(data, columns=["country","neg_words", "pos_words", "nb_review"])
+
+        #save the data
+        resultats_pos_neg_words.to_csv(generated_root + 'BeerAdvocate_pos_neg_words_analysis_part_' + str(csv_count) +'.csv')
+        print('--------------------------------------------------------')
+        
+        return
+        
+
+def loop_RateBeer_get_pos_neg_words():
+    """
+    automatic loop throuhg all rate beer csv to do an postive and negative words analysis
+    This function will get the mean of positifs and negatifs per countries by matching the user-id with the location
+    in the user_id dataset from RateBeer.
+    (disclaimer this function can take multiple hours to run, it need to run thought 28 csv of 250 000 data of reviews)
+    
+    input: list of positifs and negatif words, csv files in the correct folder 'DATA/RateBeer/'
+    output: csv with positif and negatifs words average per country's review
+    """
+    csv_count = 0
+    
+    rateBeer_root = 'DATA/RateBeer/'
+    generated_root = 'generated/'
+    df_rate_users = pd.read_csv(rateBeer_root + 'users.csv')
+    
+    # get list of positif and negatif words
+    positive_word_document = requests.get("https://ptrckprry.com/course/ssd/data/positive-words.txt")
+    negative_word_document = requests.get("https://ptrckprry.com/course/ssd/data/negative-words.txt")
+
+    positive_words = re.search(r'(?<=;[\r\n]{2}).*',positive_word_document.text,re.DOTALL).group(0).split()
+    negative_words = re.search(r'(?<=;[\r\n]{2}).*',negative_word_document.text,re.DOTALL).group(0).split()
+
+    #dictionary of sentiment words
+    sentiment_dict = {
+        "positive" : positive_words,
+        "negative" : negative_words
+    }
+    
+
+
+    #loop over all sub .csv dataset (each dataset have max 250 000 rows)
+    for csv_count in range(2,29):
+        print('csv part:',csv_count)
+        df_rev_low = pd.read_csv(rateBeer_root + 'RateBeer_reviews_part_' + str(csv_count) +'.csv')
+        df_rev_low = df_rev_low[['beer_id', 'brewery_id', 'user_id', 'text']]
+        list_user_location = df_rate_users.loc[df_rate_users['user_id'].isin(df_rev_low['user_id']),['user_id','location']]
+        print('shape:',df_rev_low.shape, 'list user location shape', list_user_location.shape)
+
+        df_rev_low.loc[:,'location'] = df_rev_low['user_id'].apply(get_location_user, args= (list_user_location,))
+
+        df_rev_low.to_csv(generated_root + 'RateBeer_location_user_id_part_' + str(csv_count) +'.csv')
+
+        print('location done for part:', csv_count)
+
+        #group by country
+        country_groups = df_rev_low.groupby(by="location")
+
+        # Positive, Negatifs words analysis
+        data = []
+
+        # loop for to compute the number of pos and neg words for each country
+        for country, group in country_groups:
+            negative_words = []
+            positive_words = []
+            print('country:', country, 'size:', group.shape[0])
+
+            negative_words.append(group.apply(lambda row : indicator_words('negative',row['text'],sentiment_dict),axis=1))
+            positive_words.append(group.apply(lambda row : indicator_words('positive',row['text'],sentiment_dict),axis=1))
+
+
+            data.append([country,np.mean(negative_words),np.mean(positive_words), group.shape[0]])
+            #resultats_pos_neg_words_2 = pd.DataFrame(data, columns=["country","neg_words", "pos_words", "nb_review"])
+
+
+        resultats_pos_neg_words = pd.DataFrame(data, columns=["country","neg_words", "pos_words", "nb_review"])
+
+        #save the data
+        resultats_pos_neg_words.to_csv(generated_root + 'RateBeer_pos_neg_words_analysis_part_' + str(csv_count) +'.csv', index=False)
+        print('--------------------------------------------------------')
+
+    return
 
 def get_location_user(x, review):
     """
@@ -70,36 +220,38 @@ def ratebeer_merging_csv_results():
     output columns are: 'country','neg_words','pos_words','nb_review'
     output rows: country but all country data are not merge at this point
     """
+    generated_root = 'generated/'
+    
     # get all the results from all sub .csv dataset
-    df_rb_part_0 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_0.csv')
-    df_rb_part_1 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_1.csv')
-    df_rb_part_2 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_2.csv')
-    df_rb_part_3 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_3.csv')
-    df_rb_part_4 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_4.csv')
-    df_rb_part_5 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_5.csv')
-    df_rb_part_6 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_6.csv')
-    df_rb_part_7 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_7.csv')
-    df_rb_part_8 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_8.csv')
-    df_rb_part_9 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_9.csv')
-    df_rb_part_10 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_10.csv')
-    df_rb_part_11 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_11.csv')
-    df_rb_part_12 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_12.csv')
-    df_rb_part_13 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_13.csv')
-    df_rb_part_14 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_14.csv')
-    df_rb_part_15 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_15.csv')
-    df_rb_part_16 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_16.csv')
-    df_rb_part_17 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_17.csv')
-    df_rb_part_18 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_18.csv')
-    df_rb_part_19 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_19.csv')
-    df_rb_part_20 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_20.csv')
-    df_rb_part_21 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_21.csv')
-    df_rb_part_22 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_22.csv')
-    df_rb_part_23 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_23.csv')
-    df_rb_part_24 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_24.csv')
-    df_rb_part_25 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_25.csv')
-    df_rb_part_26 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_26.csv')
-    df_rb_part_27 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_27.csv')
-    df_rb_part_28 = pd.read_csv(rateBeer_root +  'RateBeer_pos_neg_words_analysis_part_28.csv')
+    df_rb_part_0 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_0.csv')
+    df_rb_part_1 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_1.csv')
+    df_rb_part_2 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_2.csv')
+    df_rb_part_3 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_3.csv')
+    df_rb_part_4 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_4.csv')
+    df_rb_part_5 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_5.csv')
+    df_rb_part_6 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_6.csv')
+    df_rb_part_7 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_7.csv')
+    df_rb_part_8 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_8.csv')
+    df_rb_part_9 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_9.csv')
+    df_rb_part_10 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_10.csv')
+    df_rb_part_11 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_11.csv')
+    df_rb_part_12 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_12.csv')
+    df_rb_part_13 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_13.csv')
+    df_rb_part_14 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_14.csv')
+    df_rb_part_15 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_15.csv')
+    df_rb_part_16 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_16.csv')
+    df_rb_part_17 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_17.csv')
+    df_rb_part_18 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_18.csv')
+    df_rb_part_19 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_19.csv')
+    df_rb_part_20 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_20.csv')
+    df_rb_part_21 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_21.csv')
+    df_rb_part_22 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_22.csv')
+    df_rb_part_23 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_23.csv')
+    df_rb_part_24 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_24.csv')
+    df_rb_part_25 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_25.csv')
+    df_rb_part_26 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_26.csv')
+    df_rb_part_27 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_27.csv')
+    df_rb_part_28 = pd.read_csv(generated_root +  'RateBeer_pos_neg_words_analysis_part_28.csv')
     
     #One dataset of RateBeer to rule them all, One dataset to find them, 
     #One dataset to bring them all and in the darkness bind them 
@@ -116,18 +268,20 @@ def ratebeer_merging_csv_results():
 
 
 def advbeer_merging_csv_results():
+    generated_root = 'generated/'
+    
     # get all the results from all sub .csv dataset
-    df_part_0 = pd.read_csv(advBeer_root +  'BeerAdvocate_pos_neg_words_analysis_part_0.csv')
-    df_part_1 = pd.read_csv(advBeer_root +  'BeerAdvocate_pos_neg_words_analysis_part_1.csv')
-    df_part_2 = pd.read_csv(advBeer_root +  'BeerAdvocate_pos_neg_words_analysis_part_2.csv')
-    df_part_3 = pd.read_csv(advBeer_root +  'BeerAdvocate_pos_neg_words_analysis_part_3.csv')
-    df_part_4 = pd.read_csv(advBeer_root +  'BeerAdvocate_pos_neg_words_analysis_part_4.csv')
-    df_part_5 = pd.read_csv(advBeer_root +  'BeerAdvocate_pos_neg_words_analysis_part_5.csv')
-    df_part_6 = pd.read_csv(advBeer_root +  'BeerAdvocate_pos_neg_words_analysis_part_6.csv')
-    df_part_7 = pd.read_csv(advBeer_root +  'BeerAdvocate_pos_neg_words_analysis_part_7.csv')
-    df_part_8 = pd.read_csv(advBeer_root +  'BeerAdvocate_pos_neg_words_analysis_part_8.csv')
-    df_part_9 = pd.read_csv(advBeer_root +  'BeerAdvocate_pos_neg_words_analysis_part_9.csv')
-    df_part_10 = pd.read_csv(advBeer_root +  'BeerAdvocate_pos_neg_words_analysis_part_10.csv')
+    df_part_0 = pd.read_csv(generated_root +  'BeerAdvocate_pos_neg_words_analysis_part_0.csv')
+    df_part_1 = pd.read_csv(generated_root +  'BeerAdvocate_pos_neg_words_analysis_part_1.csv')
+    df_part_2 = pd.read_csv(generated_root +  'BeerAdvocate_pos_neg_words_analysis_part_2.csv')
+    df_part_3 = pd.read_csv(generated_root +  'BeerAdvocate_pos_neg_words_analysis_part_3.csv')
+    df_part_4 = pd.read_csv(generated_root +  'BeerAdvocate_pos_neg_words_analysis_part_4.csv')
+    df_part_5 = pd.read_csv(generated_root +  'BeerAdvocate_pos_neg_words_analysis_part_5.csv')
+    df_part_6 = pd.read_csv(generated_root +  'BeerAdvocate_pos_neg_words_analysis_part_6.csv')
+    df_part_7 = pd.read_csv(generated_root +  'BeerAdvocate_pos_neg_words_analysis_part_7.csv')
+    df_part_8 = pd.read_csv(generated_root +  'BeerAdvocate_pos_neg_words_analysis_part_8.csv')
+    df_part_9 = pd.read_csv(generated_root +  'BeerAdvocate_pos_neg_words_analysis_part_9.csv')
+    df_part_10 = pd.read_csv(generated_root +  'BeerAdvocate_pos_neg_words_analysis_part_10.csv')
     
     # One dataset to rule them all, One dataset to find them, 
     # One dataset to bring them all and in the darkness bind them 
