@@ -41,7 +41,7 @@ First of all, the proportion of NaN values in each column of each dataset was an
 
 ### SAT Dataset processing
 
-We used Vector Space Retrieval based on ```sklearn``` feature extraction module in order to identify SAT beers in the proposed datasets. To this end, we constructed tokenized queries and beer entries based on beer name, brewery name and alcohol content and used cosine distance as a measure of similarity. After a first analysis of our results, matches with cosine similarity smaller than 0.8 were considered not relevant and we kept the best result for each dataset. We checked manually the beers without a match under our similarity threshold and accepeted the low similarity matches that were due to negligable variations.
+We used Vector Space Retrieval in order to identify SAT beers in the proposed datasets. To this end, we constructed tokenized queries and beer entries based on beer name, brewery name and alcohol content and used cosine distance as a measure of similarity. After a first analysis of our results, matches with cosine similarity smaller than 0.8 were considered not relevant and we kept the best result for each dataset. We checked manually the beers without a match under our similarity threshold and accepeted the low similarity matches that were due to negligable variations.
 
 Beers that were not matched in the dataset were considered to not be rated by any user. We estimate the rating for these beers by implementing a Random Forest Regressor, which learns beer ratings based on features constructed from Alcohol content (ABV), Beer style and Country of origin of the brewery f each beer.
 
