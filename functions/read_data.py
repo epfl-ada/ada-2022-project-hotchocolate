@@ -189,10 +189,25 @@ def find_favourite_beers(website,threshold=10):
         else : 
             row = df.loc[[df['normalized_rating'].idxmax()]].copy()
             return row
-    most_reviewed_beer = beer_most_drinked_by_country.groupby(by="location").apply(lambda df : most_rated(df)).reset_index(drop=True)
-    favorite_beer = beer_most_drinked_by_country.groupby(by="location").apply(lambda df : best_rating(df,threshold,"beer_name")).reset_index(drop=True)
+    #Create a count of user in each countries     
+    count_of_user = pd.DataFrame (users['location'].value_counts())
+    count_of_user.rename(columns = {'location':'count_user'}, inplace = True)
+    count_of_user['location']= count_test.index
+    count_of_user.reset_index(inplace = True, drop = True)
+    
+    def merge_count_user_data(dataset):
+        '''Merge count_of_user with a dataset '''
+        dataset = dataset.merge(count_of_user[["location","count_user"]],
+                                               how="outer",left_on="location",right_on="location")
+        return dataset
 
-    most_reviewed_style = style_most_drinked_by_country.groupby(by="location").apply(lambda df : most_rated(df)).reset_index(drop=True)
-    favorite_style = style_most_drinked_by_country.groupby(by="location").apply(lambda df : best_rating(df,threshold,"style")).reset_index(drop=True)
+    most_reviewed_beer = merge_count_user_data(beer_most_drinked_by_country.groupby(by="location").apply(lambda df : most_rated(df)).reset_index(drop=True))
+    
+    favorite_beer = merge_count_user_data(beer_most_drinked_by_country.groupby(by="location").apply(lambda df : best_rating(df,threshold,"beer_name")).reset_index(drop=True))
+
+    most_reviewed_style = merge_count_user_data(style_most_drinked_by_country.groupby(by="location").apply(lambda df : most_rated(df)).reset_index(drop=True))
+    
+    favorite_style = merge_count_user_data(style_most_drinked_by_country.groupby(by="location").apply(lambda df : best_rating(df,threshold,"style")).reset_index(drop=True))
+    
     print("Success!")
     return most_reviewed_beer,favorite_beer,most_reviewed_style,favorite_style

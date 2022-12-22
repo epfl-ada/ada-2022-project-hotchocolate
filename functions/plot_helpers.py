@@ -9,7 +9,7 @@ import plotly.express as px
 from  plotly.offline import plot
 import pandas as pd
 import numpy as np
-import openai
+#import openai
 from sklearn.manifold import TSNE
 from PIL import Image
 from plotly.subplots import make_subplots
@@ -108,7 +108,7 @@ def generate_map(filename, map_name, usa= False,
     '''
 
     data = pd.read_csv(source_file_path + filename)
-    
+    display(data)
     ### NOTE: Clean corrrupted data but we should do it before 
     for i, e in enumerate(data['location']):
         if "http" in e or "<" in e:
@@ -135,6 +135,7 @@ def generate_map(filename, map_name, usa= False,
                                  location_country["brewery_name"],
                                  location_country["normalized_rating"],
                                  location_country["style"],
+                                 location_country["count_user"],
                                  location_country["pos_words"],
                                  location_country["neg_words"]), axis=-1)
 
@@ -157,8 +158,9 @@ def generate_map(filename, map_name, usa= False,
                             <br><b>Brewery</b>: %{customdata[1]}
                             <br><b>Mean Rating</b>: %{customdata[2]:.2f}
                             <br><b>Type</b>: %{customdata[3]}
-                            <br><b>Mean Positive words across all reviews </b>: %{customdata[4]}
-                            <br><b>Mean Negative words across all reviews</b>: %{customdata[5]}<br><extra></extra>"""
+                            <br><b>N° of users in the country</b>: %{customdata[4]}
+                            <br><b>Mean Positive words across all reviews </b>: %{customdata[5]}
+                            <br><b>Mean Negative words across all reviews</b>: %{customdata[6]}<br><extra></extra>"""
     ))
 
     fig_world.update_layout(
@@ -186,6 +188,7 @@ def generate_map(filename, map_name, usa= False,
                                  united_states["brewery_name"],
                                  united_states["normalized_rating"],
                                  united_states["style"],
+                                 united_states["count_user"],
                                  united_states["pos_words"],
                                  united_states["neg_words"]), axis=-1)
         #plot the usa map
@@ -207,8 +210,9 @@ def generate_map(filename, map_name, usa= False,
                             <br><b>Brewery</b>: %{customdata[1]}
                             <br><b>Mean Rating</b>: %{customdata[2]:.2f}
                             <br><b>Type</b>: %{customdata[3]}
-                            <br><b>Mean Positive words across all reviews</b>: %{customdata[4]}
-                            <br><b>Mean Negative words across all reviews</b>: %{customdata[5]}<br><extra></extra>"""
+                            <br><b>N° of users in the country</b>: %{customdata[4]}
+                            <br><b>Mean Positive words across all reviews</b>: %{customdata[5]}
+                            <br><b>Mean Negative words across all reviews</b>: %{customdata[6]}<br><extra></extra>"""
     
 
     
