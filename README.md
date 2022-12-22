@@ -45,10 +45,6 @@ We used Vector Space Retrieval in order to identify SAT beers in the proposed da
 
 Beers that were not matched in the dataset were considered to not be rated by any user. We estimate the rating for these beers by implementing a Random Forest Regressor, which learns beer ratings based on features constructed from Alcohol content (ABV), Beer style and Country of origin of the brewery f each beer.
 
-### Exploratory data analysis and first summary statistics
-
-The top 5 location of users and of breweries were computed.
-Histogram plots of the number of ratings received by beers and number of ratings ratings per the number of reviews per users and of the number of beers per breweries were also computed.
 
 ### Standardization and bias correction
 
