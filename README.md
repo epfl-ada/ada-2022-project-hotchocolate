@@ -1,6 +1,6 @@
 # ADA Project - Team HotChocolate
 ## Beers around our brewtiful world and in our local Satellite 
-#### Gabriel Benato, Auriane Debache, Xavier Nal and Joao Prado
+#### Gabriel Benato, Auriane Debache, Xavier Nal and João Prado
 
 ## Abstract 
 
