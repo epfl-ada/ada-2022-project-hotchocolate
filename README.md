@@ -103,6 +103,6 @@ Therefore, we decided to look at the number of positive and negative words in th
 ## Contributions of HotChocolate members :
 
 - Auriane :
-- Gabriel :
+- Gabriel : Interactive map, code cleaning and data story
 - João : SAT beer pipeline (scrapping, matching data between datasets, visualization, data story)
 - Xavier : Sentiment Analysis with nlp, Positive and negative words for all reviews analysis
