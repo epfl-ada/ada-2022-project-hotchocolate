@@ -11,7 +11,18 @@ Our objective is to tell the story of the greatness of beers and countries throu
 Once this consensus ranking is devised, we propose an excursion to SAT as a last analysis. We wish to provide our peer students the distilled wisdom of the internet and provide some guidance in the quest for the best ale in Ecublens !
 
 ## Research Questions
-- Which are the best beer brewed in each country, when ratings are corrected with respect to reviewer bias ?
+
+- Can we provide a satisfying correction of systematic user bias?
+- Which beers are preferred by different nationalities? 
+- Do some nationalities have better taste than others?
+- Are some nationalities more prone to praise in their reviews than other nationalities?
+- Can we predict the ratings of beers sold at SAT but not found in our datasets?
+- What is the rating ranking of beers sold at SAT?
+- Is this rating correlated to the price and volume of the beers?
+- Can we provide a menu of beers sold at SAT for each nationality? 
+- Can we provide a description of all beers sold at SAT to help customers to make their choice?
+
+
 - What are the countries and breweries producing the best beers ? Does the result change when we take into account reviewer bias ?
 - Does the alcohol by volume ranking match the beer ranking?
 - Does the ranking of countries based on the quality of their beers correlate with the ranking of countries based on happiness?
@@ -37,7 +48,7 @@ The following information will be available:
 
 ### Data processing
 
-First of all, the proportion of NaN values in each column of each dataset was analyzed. Columns that displayed a proportion of NA values going over 60% were discarded, since they would not have provided much information to our analysis. Moreover, it was found that there were some users were present in duplicates in the users dataset. Only one occurrence was kept when this was the case. In addition, breweries that were found to produce no beers that were rated were discarded from the datasets. After exploring the matched beer dataset, it was decided to not use in our analysis, which will consider each one of the main datasets separatedly.
+First of all, the proportion of NaN values in each column of each dataset was analyzed. Columns that displayed a proportion of NA values going over 60% were discarded, since they would not have provided much information to our analysis. Beers that did not display any ratings were removed. Moreover, it was found that there were some users were present in duplicates in the users dataset. Only one occurrence was kept when this was the case. In addition, breweries that were found to produce no beers that were rated were discarded from the datasets. After exploring the matched beer dataset, it was decided to not use in our analysis, which will consider each one of the main datasets separatedly.
 
 ### SAT Dataset processing
 
@@ -56,6 +67,8 @@ b_i &= \frac{1}{n_{r,i}} \sum_{\text{All user i ratings}}r_i - \frac{1}{N}\sum_{
 \end{aligned}$$
 
 Where $r_{ij}$ is the rating of user i to to j, $n_{r,i}$ is the number of ratings given by user $i$, $b_i$ is the estimated bias of user $i$ $\alpha_i$ is an attenuation coefficient specific to user $i$ and based on $n_{r,i}$, $N$ is the total number of ratings in the dataset. 
+
+In order to implement such a correction, the ratings dataset was grouped by user ids and an average rating was computed for each user. An absolute bias for each user was then computed by substratcting the average rating of beers to the average rating of the user. This bias was attenuated by multiplying it by an attenuation coefficient calculated as follows: 
 
 ### Textual analysis of proeminent beers
 
