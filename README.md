@@ -32,9 +32,9 @@ We propose an auxiliary dataset consisting of information about 66 beers sold at
 | Beer name | Price | Type | Brewery name | Origin | Available on tap? (True/False) | Available only seasonally? (True/False) | ABV | Serving volume |
 |-----------|-------|------|--------------|--------|------------------|---------------------------|-----|----------------|
 
-We will also extract a countries ranking based on Hapiness in 2017 available at https://allcountries.org/ranks/happiness_index_country_rankings_2017.html.
+We will also extract a countries ranking based on Happiness in 2017 available at https://allcountries.org/ranks/happiness_index_country_rankings_2017.html.
 
-The following information will be available:
+We will investigate the possibility of augmenting the Beer datasets with this ranking. The following information will be available:
 
 | Rank | Country/Region | Hapiness' score |
 |------|----------------|-----------------|
