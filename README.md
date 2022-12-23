@@ -72,7 +72,7 @@ The bias of user i is attenuated by attenuation coefficient $\alpha_i$ computed 
 
 $$ \begin{aligned} n_{r,i}=1 \alpha_i=0 \end{aligned}$$
 
-$$ \begin{aligned} 1<n_{r,i}<n_{max} \alpha_i=\frac{1}{n_{max}-1}n_{r,i}-\frac{1}{n_{max}-1} \end{aligned}$$
+$$ \begin{aligned} 1 < n_{r,i} < n_{max} \alpha_i=\frac{1}{n_{max}-1}n_{r,i}-\frac{1}{n_{max}-1} \end{aligned}$$
 
 $$ \begin{aligned} n_{r,i}=n_{max} \alpha_i=1 \end{aligned}$$
 
