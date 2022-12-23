@@ -16,6 +16,7 @@ from plotly.subplots import make_subplots
 from io import BytesIO
 import base64
 import os 
+import re
 STATES = {
 "Alabama": "AL",
 "Alaska": "AK",

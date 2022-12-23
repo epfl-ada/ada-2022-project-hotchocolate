@@ -225,6 +225,9 @@ def save_and_display_sat_ratings(website,predictions,matching_results,beers_to_p
 
     matching_results (dataframe) : Ratings for beers that found a match in 'website' dataframe.
     
+    beers_to_predict (dataframe) : Original dataframe of SAT beers that had not found a match in RB/BAdatasets
+
+
     training_set     (dataframe) : dataframe of features used to train the dataset. Column '1' should be the labels. 
 
     

@@ -192,7 +192,7 @@ def find_favourite_beers(website,threshold=10):
     #Create a count of user in each countries     
     count_of_user = pd.DataFrame (users['location'].value_counts())
     count_of_user.rename(columns = {'location':'count_user'}, inplace = True)
-    count_of_user['location']= count_test.index
+    count_of_user['location']= count_of_user.index
     count_of_user.reset_index(inplace = True, drop = True)
     
     def merge_count_user_data(dataset):
