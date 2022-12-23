@@ -6,6 +6,7 @@ This file pool all the helpers functions used for positives and negatives words 
 
 """
 import pandas as pd
+import numpy as np
 import requests
 import re
 
@@ -21,7 +22,7 @@ def loop_AdvBeer_get_pos_neg_words():
     input: list of positifs and negatif words, csv files in the correct folder 'DATA/BeerAdvocate/'
     output: csv with positif and negatifs words average per country's review
     """
-     csv_count = 0
+    csv_count = 0
 
     advBeer_root = 'DATA/BeerAdvocate/'
     generated_root = 'generated/'
