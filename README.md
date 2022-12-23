@@ -92,4 +92,4 @@ Therefore, we decided to look at the number of positive and negative words in th
 - Auriane :
 - Gabriel :
 - João : SAT beer pipeline (scrapping, matching data between datasets, visualization, data story)
-- Xavier :
+- Xavier : Sentiment Analysis with nlp, Positive and negative words for all reviews analysis
