@@ -78,7 +78,7 @@ STATES = {
 }
 
 
-def generate_map(filename, map_name, usa= False, 
+def generate_map(filename, map_name, usa= True, 
                  html = True, show_map = True,
                  title = '',
                  source_file_path = 'map/file_for_map/', 
@@ -109,7 +109,6 @@ def generate_map(filename, map_name, usa= False,
     '''
 
     data = pd.read_csv(source_file_path + filename)
-    display(data)
     ### NOTE: Clean corrrupted data but we should do it before 
     for i, e in enumerate(data['location']):
         if "http" in e or "<" in e:
@@ -136,6 +135,7 @@ def generate_map(filename, map_name, usa= False,
                                  location_country["brewery_name"],
                                  location_country["normalized_rating"],
                                  location_country["style"],
+                                 location_country["count"],
                                  location_country["count_user"],
                                  location_country["pos_words"],
                                  location_country["neg_words"]), axis=-1)
@@ -155,13 +155,13 @@ def generate_map(filename, map_name, usa= False,
         colorbar_title = "Mean average rating",
         customdata = hover_data_world,
         hovertemplate="""   <br><b>Country</b>: %{text}
-                            <br><b>Beer</b>: %{customdata[0]}
+                            <br><b>Beer loved by %{customdata[4]} human(s) in %{text}</b>: %{customdata[0]}
                             <br><b>Brewery</b>: %{customdata[1]}
                             <br><b>Mean Rating</b>: %{customdata[2]:.2f}
                             <br><b>Type</b>: %{customdata[3]}
-                            <br><b>N° of users in the country</b>: %{customdata[4]}
-                            <br><b>Mean Positive words across all reviews </b>: %{customdata[5]}
-                            <br><b>Mean Negative words across all reviews</b>: %{customdata[6]}<br><extra></extra>"""
+                            <br><b>N° of users in the country</b>: %{customdata[5]}
+                            <br><b>Mean Positive words across all reviews </b>: %{customdata[6]}
+                            <br><b>Mean Negative words across all reviews</b>: %{customdata[7]}<br><extra></extra>"""
     ))
 
     fig_world.update_layout(
@@ -189,6 +189,7 @@ def generate_map(filename, map_name, usa= False,
                                  united_states["brewery_name"],
                                  united_states["normalized_rating"],
                                  united_states["style"],
+                                 united_states["count"],
                                  united_states["count_user"],
                                  united_states["pos_words"],
                                  united_states["neg_words"]), axis=-1)
@@ -207,13 +208,13 @@ def generate_map(filename, map_name, usa= False,
             colorbar_title = 'Mean average rating',
             customdata = hover_data_usa,
             hovertemplate="""   <br><b>States</b>: %{text}
-                            <br><b>Beer</b>: %{customdata[0]}
+                            <br><b>Beer loved by %{customdata[4]} human(s) in %{text}</b>: %{customdata[0]}
                             <br><b>Brewery</b>: %{customdata[1]}
                             <br><b>Mean Rating</b>: %{customdata[2]:.2f}
                             <br><b>Type</b>: %{customdata[3]}
-                            <br><b>N° of users in the country</b>: %{customdata[4]}
-                            <br><b>Mean Positive words across all reviews</b>: %{customdata[5]}
-                            <br><b>Mean Negative words across all reviews</b>: %{customdata[6]}<br><extra></extra>"""
+                            <br><b>N° of users in the country</b>: %{customdata[5]}
+                            <br><b>Mean Positive words across all reviews </b>: %{customdata[6]}
+                            <br><b>Mean Negative words across all reviews</b>: %{customdata[7]}<br><extra></extra>"""
     
 
     
@@ -232,6 +233,7 @@ def generate_map(filename, map_name, usa= False,
         if html :
             fig_usa.write_html(html_file_path + map_name +"_usa.html")
     return
+
 def combine_neg_pos_and_favoured_beer(neg_pos_filename, favoured_filename, combined_filename, 
                                        source_file_path = 'map/file_for_map/'):
     ''' 
