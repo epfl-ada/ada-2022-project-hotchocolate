@@ -2,6 +2,7 @@
 ## Beers around our brewtiful world and in our local Satellite 
 #### Gabriel Benato, Auriane Debache, Xavier Nal and João Prado
 
+### [Our Data Story](https://jprado1.github.io/brewrank/)
 ## Abstract 
 
 Beer is an important cultural symbol for many countries and [has generated more than $550bn revenue worldwide in 2021](https://www.statista.com/outlook/cmo/alcoholic-drinks/beer/worldwide#revenue).
@@ -23,12 +24,6 @@ Once this consensus ranking is devised, we propose an excursion to SAT as a last
 - Can we provide a description of all beers sold at SAT to help customers to make their choice?
 
 
-- What are the countries and breweries producing the best beers ? Does the result change when we take into account reviewer bias ?
-- Does the alcohol by volume ranking match the beer ranking?
-- Does the ranking of countries based on the quality of their beers correlate with the ranking of countries based on happiness?
-- What are the best beers sold on SAT ? 
-- Is SAT providing good beers to poor students? 
--Addtional question if we have enough time: can we predict the ratings that the beers sold at SAT but not found in our datasets?
   
 ## Proposed additional datasets
 
@@ -96,6 +91,14 @@ Therefore, we decided to look at the number of positive and negative words in th
 
 ## Organization within the team:
 
+Bias correction : 1 person (Auriane)
+Creating interactive plots : 1 person (Gabriel)
+Sentiment analysis and happiness dataset investigation (not included in final work) : (Xavier)
+Site design : 1 person (Auriane)
+Site implementation : 1 person (João)
+SAT pipeline (from data scrapping, through analysis and plotting) : 2 person (João and someone)
+Data Story writing : Everyone
+
  ### Folder Structure
 
  - DATA (folder that won't contain the data on git)
@@ -112,7 +115,7 @@ Therefore, we decided to look at the number of positive and negative words in th
 
 ## Contributions of HotChocolate members :
 
-- Auriane :
-- Gabriel : Interactive map, code cleaning and data story
-- João : SAT beer pipeline (scrapping, matching data between datasets, visualization, data story)
+- Auriane : Bias correction, regression for SAT beer rankings on price, Data Story, ReadMe
+- Gabriel : Interactive map, code cleaning and Data Story
+- João : SAT beer pipeline (scrapping, matching data between datasets, visualization, data story), ReadMe, Data Story
 - Xavier : Sentiment Analysis with nlp, Positive and negative words for all reviews analysis
