@@ -15,7 +15,7 @@ Once this consensus ranking is devised, we propose an excursion to SAT as a last
 
 - Can we provide a satisfying correction of systematic user bias?
 - Which beers are preferred by different nationalities? 
-- Do some nationalities have better taste than others?
+- Do some nationalities have "better taste" than others?
 - Are some nationalities more prone to praise in their reviews than other nationalities?
 - Can we predict the ratings of beers sold at SAT but not found in our datasets?
 - What is the rating ranking of beers sold at SAT?
