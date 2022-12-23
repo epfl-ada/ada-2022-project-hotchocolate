@@ -69,6 +69,7 @@ b_i &= \frac{1}{n_{r,i}} \sum_{\text{All user i ratings}}r_i - \frac{1}{N}\sum_{
 Where $r_{ij}$ is the rating of user i for beer j, $n_{r,i}$ is the number of ratings given by user $i$, $b_i$ is the estimated bias of user $i$ $\alpha_i$ is an attenuation coefficient specific to user $i$ and based on $n_{r,i}$, $N$ is the total number of ratings in the dataset. 
 
 The bias of user i is attenuated by attenuation coefficient $\alpha_i$ computed as follows:
+
 $$ \begin{aligned} \alpha_i=\frac{1}{max_{r}-1}n_{r,i}-\frac{1}{max_{r}-1} \end{aligned}$$
 
 ### Textual analysis of proeminent beers
