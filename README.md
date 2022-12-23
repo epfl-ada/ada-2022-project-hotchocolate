@@ -78,6 +78,7 @@ $$ \begin{aligned} n_{r,i}=n_{max} \text{ : } \alpha_i=1 \end{aligned}$$
 
 
 where $n_{max}$ is the maximum number of ratings given by an user. This allows to give cancel out biases of one-time reviewers, give maximum weight to the user that gave $n_{max}$ reviews, and to increase proportionally the bias of other reviewers with their $n_{r,i}$.
+Corrected ratings are then clipped to be comprised between 0 and 5. From these corrected ratings, we compute a new debiased average for each beer.  
 
 ### Textual analysis of proeminent beers
 
