@@ -9,7 +9,7 @@ import plotly.express as px
 from  plotly.offline import plot
 import pandas as pd
 import numpy as np
-#import openai
+import openai
 from sklearn.manifold import TSNE
 from PIL import Image
 from plotly.subplots import make_subplots
