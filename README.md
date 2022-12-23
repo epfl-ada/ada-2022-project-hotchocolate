@@ -70,9 +70,9 @@ Where $r_{ij}$ is the rating of user i for beer j, $n_{r,i}$ is the number of ra
 
 The bias of user i is attenuated by attenuation coefficient $\alpha_i$ computed as follows:
 
-$$ \begin{aligned} n_{r,i}=1   \alpha_i=0 \\
-1<n_{r,i}<n_{max} \alpha_i=\frac{1}{n_{max}-1}n_{r,i}-\frac{1}{n_{max}-1} \\
-n_{r,i}=n_{max} \alpha_i=1 \end{aligned}$$
+$$ \begin{aligned} n_{r,i}&=1   \alpha_i=0 \\
+1<n_{r,i}<n_{max} \alpha_i&=\frac{1}{n_{max}-1}n_{r,i}-\frac{1}{n_{max}-1} \\
+n_{r,i}&=n_{max} \alpha_i&=1 \end{aligned}$$
 
 where $n_{max}$ is the maximum number of ratings given by an user. This allows to give cancel out biases of one-time reviewers, give maximum weight to the user that gave $n_{max}$ reviews, and to increase proportionally the bias of other reviewers with their $n_{r,i}$.
 
