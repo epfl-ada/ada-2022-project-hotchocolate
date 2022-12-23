@@ -70,7 +70,7 @@ Where $r_{ij}$ is the rating of user i for beer j, $n_{r,i}$ is the number of ra
 
 The bias of user i is attenuated by attenuation coefficient $\alpha_i$ computed as follows:
 
-$$ \begin{aligned} \alpha_i=\frac{1}{max_{r}-1}n_{r,i}-\frac{1}{max_{r}-1} \end{aligned}$$
+$$ \begin{aligned} \alpha_i=\frac{1}{r_max-1}n_{r,i}-\frac{1}{r_max-1} \end{aligned}$$
 
 ### Textual analysis of proeminent beers
 
